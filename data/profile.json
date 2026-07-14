@@ -1,0 +1,224 @@
+{
+  "name": {
+    "display": "Ronak Kamboj",
+    "handle": "rainz",
+    "role": "Backend & systems",
+    "place": "VIT Bhopal",
+    "location": "Bhopal, Madhya Pradesh",
+    "avatar": "/hero/rainz.jpg",
+    "status": "Available for opportunities",
+    "tagline": "Computer Science student at VIT Bhopal. I build backend systems and think about system design — mostly Node and Go, with a bias toward background services, queues, and things that stay up."
+  },
+  "about": [
+    "I started with C/C++ and Codeforces, and still do a bit of DSA in C++. These days most of my time goes into backend work: designing services, modelling data, and making the parts talk to each other without falling over.",
+    "Recently that's meant Go for background services and Node/TypeScript for APIs — with Postgres, Redis, and Kafka doing the heavy lifting underneath."
+  ],
+  "stack": {
+    "Languages": [
+      "Go",
+      "TypeScript",
+      "C++",
+      "SQL"
+    ],
+    "Backend": [
+      "Node.js",
+      "Chi",
+      "Express",
+      "Prisma",
+      "Goose"
+    ],
+    "Data": [
+      "PostgreSQL",
+      "Redis",
+      "Kafka",
+      "BullMQ"
+    ],
+    "Ops": [
+      "Docker",
+      "Caddy",
+      "Linux",
+      "Neovim"
+    ]
+  },
+  "github": {
+    "username": "R7rainz"
+  },
+  "links": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/R7rainz"
+    },
+    {
+      "label": "LinkedIn",
+      "href": "https://linkedin.com/in/ronak-kamboj"
+    },
+    {
+      "label": "Email",
+      "href": "mailto:ronakkamboj26@gmail.com"
+    }
+  ],
+  "projects": [
+    {
+      "name": "PulseOps",
+      "blurb": "Self-hostable uptime and latency monitoring. HTTP and heartbeat checks, incidents, SLA analytics, a web dashboard, a read-only API, and a terminal TUI — the whole stack comes up with one docker compose.",
+      "role": "Ping engine, queues, and API",
+      "stack": [
+        "Go",
+        "TypeScript",
+        "Kafka",
+        "Redis",
+        "Postgres",
+        "BullMQ",
+        "Next.js"
+      ],
+      "repo": "https://github.com/R7rainz/pulseops",
+      "demo": "https://youtu.be/x0MH8X3nnwk",
+      "showcase": "pulse",
+      "featured": true
+    },
+    {
+      "name": "AuraMail",
+      "blurb": "AI placement-email analyzer. Syncs Gmail over OAuth, summarizes with GPT-4 Mini, extracts company, role, deadline and salary, and pushes deadlines to Google Calendar — streamed live over SSE.",
+      "role": "Go backend, Gmail sync, AI pipeline",
+      "stack": [
+        "Go",
+        "Chi",
+        "Postgres",
+        "Next.js",
+        "OpenAI",
+        "OAuth"
+      ],
+      "repo": "https://github.com/R7rainz/AuraMail",
+      "demo": "https://youtu.be/NNu4kVtCHpo",
+      "showcase": "mail",
+      "featured": true
+    },
+    {
+      "name": "GitHub Banners",
+      "blurb": "A Go service that renders live SVG banners of GitHub stats. Multi-token rotation for rate limits, layered in-memory and Postgres caching with soft/hard TTLs, Kafka between services, and HMAC-signed internal calls.",
+      "role": "Backend, with hurtki",
+      "stack": [
+        "Go",
+        "Postgres",
+        "Kafka",
+        "Docker",
+        "HMAC"
+      ],
+      "repo": "https://github.com/hurtki/github-banners",
+      "demo": null,
+      "showcase": "banners",
+      "featured": true,
+      "backendOnly": true
+    },
+    {
+      "name": "TaskFlow",
+      "blurb": "An authentication microservice — JWT sessions with TOTP two-factor, built to be dropped in front of something else.",
+      "role": "Whole service",
+      "stack": [
+        "TypeScript",
+        "Express",
+        "Prisma",
+        "Postgres",
+        "JWT",
+        "TOTP"
+      ],
+      "repo": "https://github.com/R7rainz/TaskFlow",
+      "demo": null,
+      "showcase": "auth",
+      "featured": true,
+      "backendOnly": true
+    },
+    {
+      "name": "dotfiles",
+      "blurb": "My Linux setup — window manager, bar, editor, and the rest of the config I actually live in.",
+      "role": "Config",
+      "stack": [
+        "QML",
+        "Hyprland",
+        "Neovim",
+        "Shell"
+      ],
+      "repo": "https://github.com/R7rainz/dotfiles",
+      "demo": null,
+      "showcase": "dotfiles",
+      "featured": true,
+      "backendOnly": true
+    },
+    {
+      "name": "BrainBox",
+      "blurb": "Collaborative AI note-taking app with live multiplayer editing.",
+      "role": null,
+      "stack": [
+        "Next.js",
+        "Liveblocks",
+        "Firebase"
+      ],
+      "repo": "https://github.com/R7rainz/brainbox",
+      "demo": null,
+      "showcase": null,
+      "featured": false,
+      "art": "notes"
+    },
+    {
+      "name": "TuneSynz",
+      "blurb": "Social music discovery built on the Spotify API.",
+      "role": null,
+      "stack": [
+        "Next.js",
+        "TypeScript",
+        "Supabase",
+        "Spotify API"
+      ],
+      "repo": "https://github.com/R7rainz/tunesyncz",
+      "demo": null,
+      "showcase": null,
+      "featured": false,
+      "art": "waveform"
+    },
+    {
+      "name": "CodeQuest Lite",
+      "blurb": "A tracker for coding challenges and practice streaks.",
+      "role": null,
+      "stack": [
+        "React",
+        "Node.js",
+        "Express",
+        "Firebase"
+      ],
+      "repo": "https://github.com/R7rainz/codequest-lite",
+      "demo": null,
+      "showcase": null,
+      "featured": false,
+      "art": "streak"
+    },
+    {
+      "name": "neovim-conf",
+      "blurb": "My Neovim configuration, split out on its own.",
+      "role": null,
+      "stack": [
+        "Lua",
+        "Neovim"
+      ],
+      "repo": "https://github.com/R7rainz/neovim-conf",
+      "demo": null,
+      "showcase": null,
+      "featured": false,
+      "art": "editor"
+    },
+    {
+      "name": "SoftSell",
+      "blurb": "Frontend build from an internship assignment.",
+      "role": null,
+      "stack": [
+        "React",
+        "Tailwind",
+        "Framer Motion"
+      ],
+      "repo": "https://github.com/R7rainz/softsell",
+      "demo": null,
+      "showcase": null,
+      "featured": false,
+      "art": "landing"
+    }
+  ]
+}
