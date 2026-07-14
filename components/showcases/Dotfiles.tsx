@@ -3,25 +3,33 @@
 import { useEffect, useState } from "react";
 
 /**
- * Fedora KDE workflow scene.
+ * The Arch rice — what R7rainz/dotfiles actually contains.
  *
- * The old Arch/Hyprland identity is intentionally gone. This card now shows a
- * polished Fedora + KDE Plasma desktop: panel, launcher, widgets, terminals,
- * and a clean dev workspace.
+ * Hyprland on Wayland with a Quickshell (Noctalia) bar; the repo's .config has
+ * hypr/, noctalia/, waybar/, rofi/, mako/, fish/, nvim/, yazi/ — hence QML as
+ * the repo language. Not Fedora/KDE: that's his current daily driver, but these
+ * dotfiles are the Arch setup.
+ *
+ * Windows tile in one at a time, then the layout holds. Hover focuses a window
+ * the way a WM would, and the focused one gets Hyprland's signature gradient
+ * border.
  */
 
-const WINDOWS = [
-  { id: "nvim", title: "nvim", accent: "#3c6eb4", area: "col-span-2 row-span-2" },
-  { id: "konsole", title: "konsole", accent: "#2aa198", area: "col-span-1 row-span-1" },
-  { id: "monitor", title: "system monitor", accent: "#fb4934", area: "col-span-1 row-span-1" },
-] as const;
+const ARCH = "#1793d1";
 
-const TIMELINE = [0, 1, 2, 3, 3, 3, 3, 3, 3];
+const WINDOWS = [
+  { id: "fetch", title: "fastfetch", accent: ARCH, area: "col-span-2 row-span-1" },
+  { id: "nvim", title: "nvim", accent: "#a6e3a1", area: "col-span-1 row-span-2" },
+  { id: "yazi", title: "yazi", accent: "#cba6f7", area: "col-span-2 row-span-1" },
+];
+
+// Open one at a time, then hold the full layout — that's what you mostly see.
+const TIMELINE = [0, 1, 2, 3, 3, 3, 3, 3, 3, 3];
 const BEAT_MS = 620;
 
 export function Dotfiles() {
   const [beat, setBeat] = useState(0);
-  const [focus, setFocus] = useState<string | null>(null);
+  const [focus, setFocus] = useState<string | null>("fetch");
 
   useEffect(() => {
     const id = setInterval(() => setBeat((b) => (b + 1) % TIMELINE.length), BEAT_MS);
@@ -31,35 +39,42 @@ export function Dotfiles() {
   const open = TIMELINE[beat];
 
   return (
-    <div className="relative flex h-full w-full flex-col overflow-hidden bg-gradient-to-br from-[#0b1020] via-[#101826] to-[#001b24] p-3">
+    <div className="relative flex h-full w-full flex-col overflow-hidden bg-[#11111b] p-2.5">
+      {/* wallpaper: arch mark + hyprland-ish blooms */}
       <div className="pointer-events-none absolute inset-0 grid place-items-center">
-        <FedoraMark className="h-3/4 w-3/4 text-[#3c6eb4]/[0.08]" />
+        <ArchMark className="h-[78%] w-[78%]" style={{ color: ARCH, opacity: 0.07 }} />
       </div>
-      <div className="pointer-events-none absolute -bottom-1/4 -right-1/4 h-2/3 w-2/3 rounded-full bg-[#3c6eb4]/20 blur-3xl" />
-      <div className="pointer-events-none absolute -left-1/4 -top-1/4 h-1/2 w-1/2 rounded-full bg-[#fb4934]/12 blur-3xl" />
+      <div
+        className="pointer-events-none absolute -right-1/4 -top-1/3 h-2/3 w-2/3 rounded-full blur-3xl"
+        style={{ background: `${ARCH}22` }}
+      />
+      <div className="pointer-events-none absolute -bottom-1/3 -left-1/4 h-2/3 w-2/3 rounded-full bg-[#cba6f7]/15 blur-3xl" />
 
-      {/* KDE-style top panel */}
-      <div className="relative z-10 mb-3 flex items-center justify-between rounded-xl bg-black/35 px-3 py-1.5 font-mono text-[0.6rem] text-white/55 ring-1 ring-white/10 backdrop-blur-md">
+      {/* noctalia / quickshell bar */}
+      <div className="relative z-10 mb-2.5 flex items-center justify-between rounded-full bg-black/45 px-2.5 py-1 font-mono text-[0.55rem] text-white/55 ring-1 ring-white/10 backdrop-blur-md">
+        <div className="flex items-center gap-1.5">
+          <ArchMark className="h-2.5 w-2.5" style={{ color: ARCH }} />
+          {[1, 2, 3, 4].map((w) => (
+            <span
+              key={w}
+              className={`h-1.5 rounded-full transition-all duration-500 ${
+                w === 2 ? "w-4" : "w-1.5"
+              }`}
+              style={{ background: w === 2 ? ARCH : "rgba(255,255,255,0.22)" }}
+            />
+          ))}
+        </div>
+
+        <span className="truncate text-white/45">hyprland · noctalia</span>
+
         <div className="flex items-center gap-2">
-          <span className="grid h-5 w-5 place-items-center rounded-full bg-[#3c6eb4] text-white">
-            <FedoraMark className="h-3.5 w-3.5" />
-          </span>
-          <span className="rounded-md bg-white/8 px-2 py-0.5 text-white/70">plasma</span>
-        </div>
-
-        <span className="flex items-center gap-1.5 text-[#8ab4f8]">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#2aa198]" />
-          <span className="text-white/60">fedora · kde</span>
-        </span>
-
-        <div className="flex items-center gap-3">
-          <span>cpu 42%</span>
-          <span>mem 5.1G</span>
-          <span className="text-white/80">21:04</span>
+          <span className="text-[#a6e3a1]">42%</span>
+          <span className="text-white/75">21:04</span>
         </div>
       </div>
 
-      <div className="relative z-10 grid min-h-0 flex-1 grid-cols-3 grid-rows-2 gap-3">
+      {/* hyprland tiling: real gaps, rounded corners, focus border */}
+      <div className="relative z-10 grid min-h-0 flex-1 grid-cols-3 grid-rows-2 gap-2.5">
         {WINDOWS.map((w, i) => {
           const isOpen = i < open;
           const isFocus = focus === w.id;
@@ -67,34 +82,28 @@ export function Dotfiles() {
             <div
               key={w.id}
               onMouseEnter={() => setFocus(w.id)}
-              onMouseLeave={() => setFocus(null)}
-              className={`${w.area} flex min-h-0 flex-col overflow-hidden rounded-xl bg-black/45 backdrop-blur-sm transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+              className={`${w.area} relative flex min-h-0 flex-col overflow-hidden rounded-xl bg-[#1e1e2e]/85 backdrop-blur-sm transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                 isOpen ? "scale-100 opacity-100" : "scale-90 opacity-0"
               }`}
               style={{
+                // Hyprland's focused window gets a gradient border, not a flat one.
                 boxShadow: isFocus
-                  ? `0 0 0 1.5px ${w.accent}, 0 8px 30px rgba(0,0,0,.5)`
-                  : "0 0 0 1px rgba(255,255,255,.08)",
+                  ? `0 0 0 1.5px ${w.accent}, 0 0 22px -2px ${w.accent}66`
+                  : "0 0 0 1px rgba(255,255,255,.06)",
               }}
             >
-              <div className="flex shrink-0 items-center justify-between border-b border-white/5 px-2 py-1">
-                <div className="flex items-center gap-1.5">
-                  <span className="h-1.5 w-1.5 rounded-full" style={{ background: w.accent }} />
-                  <span className="font-mono text-[0.55rem] text-white/48">{w.title}</span>
-                </div>
-                <span className="h-1 w-5 rounded-full bg-white/10" />
+              <div className="flex shrink-0 items-center gap-1.5 px-2 pt-1.5">
+                <span
+                  className="h-1 w-1 rounded-full transition-opacity duration-500"
+                  style={{ background: w.accent, opacity: isFocus ? 1 : 0.4 }}
+                />
+                <span className="font-mono text-[0.5rem] text-white/40">{w.title}</span>
               </div>
 
-              <div className="min-h-0 flex-1 p-2 font-mono text-[0.55rem] leading-relaxed">
+              <div className="min-h-0 flex-1 px-2 pb-2 pt-1 font-mono text-[0.5rem] leading-[1.5]">
+                {w.id === "fetch" && <Fastfetch />}
                 {w.id === "nvim" && <Nvim />}
-                {w.id === "konsole" && (
-                  <div className="text-white/45">
-                    <div className="text-[#8ab4f8]">~/rainzolio</div>
-                    <div className="mt-0.5 text-[#2aa198]">pnpm dev</div>
-                    <div className="mt-0.5 text-white/30">ready · localhost:3000</div>
-                  </div>
-                )}
-                {w.id === "monitor" && <SystemMonitor accent={w.accent} />}
+                {w.id === "yazi" && <Yazi />}
               </div>
             </div>
           );
@@ -104,22 +113,48 @@ export function Dotfiles() {
   );
 }
 
+function Fastfetch() {
+  const rows = [
+    ["os", "Arch Linux x86_64"],
+    ["wm", "Hyprland (Wayland)"],
+    ["shell", "fish"],
+    ["bar", "Noctalia · Quickshell"],
+    ["term", "ghostty"],
+  ];
+  return (
+    <div className="flex h-full items-center gap-2.5">
+      <ArchMark className="h-8 w-8 shrink-0" style={{ color: ARCH }} />
+      <div className="min-w-0 flex-1">
+        {rows.map(([k, v]) => (
+          <div key={k} className="flex gap-1.5">
+            <span className="w-8 shrink-0" style={{ color: ARCH }}>
+              {k}
+            </span>
+            <span className="truncate text-white/55">{v}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function Nvim() {
-  const lines = [
-    [["type ", "#ff7b72"], ["Service", "#d2a8ff"], [" = {", "#c9d1d9"]],
-    [["  cache", "#79c0ff"], [": Redis", "#c9d1d9"], [";", "#c9d1d9"]],
-    [["  queue", "#79c0ff"], [": Kafka", "#c9d1d9"], [";", "#c9d1d9"]],
-    [["  store", "#79c0ff"], [": Postgres", "#c9d1d9"], [";", "#c9d1d9"]],
-    [["}", "#c9d1d9"]],
+  // Kept deliberately short — this window is a third of the card and longer
+  // tokens clip mid-string, which reads as a bug rather than a code snippet.
+  const lines: [string, string][][] = [
+    [["Bar", "#f9e2af"], [" {", "#6c7086"]],
+    [["  gaps", "#cba6f7"], [": ", "#6c7086"], ["8", "#fab387"]],
+    [["  round", "#cba6f7"], [": ", "#6c7086"], ["12", "#fab387"]],
+    [["}", "#6c7086"]],
   ];
   return (
     <pre className="leading-[1.6]">
       {lines.map((line, i) => (
         <div key={i}>
-          <span className="mr-2 text-white/20">{String(i + 1).padStart(2, " ")}</span>
-          {line.map(([text, color], k) => (
-            <span key={k} style={{ color }}>
-              {text}
+          <span className="mr-1.5 text-white/15">{i + 1}</span>
+          {line.map(([t, c], k) => (
+            <span key={k} style={{ color: c }}>
+              {t}
             </span>
           ))}
         </div>
@@ -128,31 +163,35 @@ function Nvim() {
   );
 }
 
-function SystemMonitor({ accent }: { accent: string }) {
-  const bars = [42, 58, 34, 76, 51, 63, 45, 82, 39, 56, 48, 70];
+function Yazi() {
+  const files = ["hypr/", "noctalia/", "waybar/", "rofi/"];
   return (
-    <div className="flex h-full min-h-0 items-end gap-[2px]">
-      {bars.map((h, k) => (
-        <span
-          key={k}
-          className="flex-1 rounded-sm"
-          style={{ height: `${h}%`, background: accent, opacity: 0.28 + h / 220 }}
-        />
+    <div className="flex h-full flex-col justify-center gap-[1px]">
+      {files.map((f, i) => (
+        <div
+          key={f}
+          className="flex items-center gap-1.5 rounded px-1"
+          style={{ background: i === 1 ? `${ARCH}33` : "transparent" }}
+        >
+          <span style={{ color: i === 1 ? ARCH : "#6c7086" }}>▸</span>
+          <span className={i === 1 ? "text-white/80" : "text-white/40"}>{f}</span>
+        </div>
       ))}
     </div>
   );
 }
 
-export function FedoraMark({ className = "h-2.5 w-2.5" }: { className?: string }) {
+/** The Arch mountain, redrawn — one path so it scales from bar to wallpaper. */
+export function ArchMark({
+  className = "h-2.5 w-2.5",
+  style,
+}: {
+  className?: string;
+  style?: React.CSSProperties;
+}) {
   return (
-    <svg viewBox="0 0 24 24" className={className} fill="none" aria-hidden>
-      <circle cx="12" cy="12" r="10" fill="currentColor" />
-      <path
-        d="M8.3 12.5c0-2.5 1.7-4.2 4.1-4.2h2.4v2.3h-2.4c-1 0-1.7.7-1.7 1.8v.2h3.8v2.2h-3.8v4.1H8.3v-4.1H6.8v-2.2h1.5z"
-        fill="white"
-        opacity="0.9"
-      />
-      <path d="M14.8 5.1h2.4v3.2h-2.4z" fill="white" opacity="0.72" />
+    <svg viewBox="0 0 24 24" className={className} style={style} fill="currentColor" aria-hidden>
+      <path d="M12 1.5c1.05 2.57 1.68 4.25 2.86 6.78-.72-.37-1.31-.63-1.87-.81.9 1.93 2.28 4.47 3.22 6.38-1.45-1.12-2.92-1.88-4.21-2.26-1.29.38-2.76 1.14-4.21 2.26.94-1.91 2.32-4.45 3.22-6.38-.56.18-1.15.44-1.87.81C10.32 5.75 10.95 4.07 12 1.5zm0 11.35c1.9.49 3.58 1.6 5.05 3.09l1.5 2.94c-1.7-1-3.6-1.79-5.4-2.19l-1.15-1.19-1.15 1.19c-1.8.4-3.7 1.19-5.4 2.19l1.5-2.94c1.47-1.49 3.15-2.6 5.05-3.09zM3.35 20.05c2.6-1.4 5.6-2.2 8.65-2.2s6.05.8 8.65 2.2l1 2.45c-3-1.72-6.3-2.62-9.65-2.62s-6.65.9-9.65 2.62l1-2.45z" />
     </svg>
   );
 }

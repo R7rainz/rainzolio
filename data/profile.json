@@ -129,20 +129,20 @@
       "backendOnly": true
     },
     {
-      "name": "dotfiles",
-      "blurb": "My Linux setup — window manager, bar, editor, and the rest of the config I actually live in.",
-      "role": "Config",
+      "name": "Arch rice — dotfiles",
+      "blurb": "My Arch Linux setup: Hyprland on Wayland with a Quickshell bar (Noctalia), plus rofi, mako, fish, Neovim and yazi. Deployed with GNU Stow. Featured on It's FOSS as one of the top Hyprland configs for UI/UX.",
+      "role": "Config · 74 stars",
       "stack": [
-        "QML",
+        "Arch",
         "Hyprland",
-        "Neovim",
-        "Shell"
+        "Quickshell",
+        "QML",
+        "Neovim"
       ],
       "repo": "https://github.com/R7rainz/dotfiles",
       "demo": null,
       "showcase": "dotfiles",
-      "featured": true,
-      "backendOnly": true
+      "featured": true
     },
     {
       "name": "BrainBox",
