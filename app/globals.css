@@ -1,0 +1,293 @@
+@import "tailwindcss";
+
+/* Tailwind's `dark:` escape hatch, kept in sync with the token system below:
+   follow the OS unless [data-theme] on <html> overrides it. */
+@custom-variant dark {
+  @media (prefers-color-scheme: dark) {
+    &:where(:root:not([data-theme="light"]), :root:not([data-theme="light"]) *) {
+      @slot;
+    }
+  }
+  &:where([data-theme="dark"], [data-theme="dark"] *) {
+    @slot;
+  }
+}
+
+/*
+ * Palette — Solarized Osaka, both ways.
+ * light: Solarized Light — base3 paper, base01 ink, solarized red accent
+ * dark:  Solarized Osaka — deep teal base, solarized ink ladder, gruvbox red accent
+ *
+ * Both halves share the solarized ink ladder, so the two themes read as one
+ * identity rather than two designs.
+ *
+ * light-dark() resolves against `color-scheme`, so every token is one line and
+ * <html data-theme="dark|light"> is all a toggle needs to touch.
+ */
+:root {
+  color-scheme: light dark;
+
+  --background: light-dark(#fdf6e3, #001b24);
+  --surface: light-dark(#eee8d5, #002b36);
+  --surface-raised: light-dark(#fffdf6, #073642);
+
+  --border: light-dark(#e3dcc4, #0d3f4b);
+  --border-strong: light-dark(#cfc7ab, #14505e);
+
+  /* Solarized's ink ladder. The light side is shifted one step darker than the
+     canonical scheme: base1/base0 only reach 2.5:1 and 2.9:1 on base3, so the
+     usual body colours would fail AA. Ends at base00, which still clears 4.1:1
+     for de-emphasised text. */
+  --heading: light-dark(#073642, #eee8d5);
+  --foreground: light-dark(#495f66, #93a1a1);
+  --foreground-muted: light-dark(#586e75, #839496);
+  --foreground-subtle: light-dark(#657b83, #657b83);
+
+  --accent: light-dark(#dc322f, #fb4934);
+  --accent-hover: light-dark(#cb4b16, #ff6b5a);
+  /* Solarized red lands at 4.27:1 on base3 — just shy of AA — so text/links
+     take a darkened red. On the dark base #fb4934 already clears 5.1:1. */
+  --accent-text: light-dark(#b52823, #fb4934);
+  /* Ink on an --accent fill. White clears 4.6:1 on solarized red but only
+     3.4:1 on gruvbox red, where the deep base wins at 5.1:1 — hence the flip. */
+  --accent-foreground: light-dark(#ffffff, #001b24);
+  --accent-subtle: light-dark(
+    color-mix(in oklab, #dc322f 11%, transparent),
+    color-mix(in oklab, #fb4934 14%, transparent)
+  );
+
+  /* Contribution calendar: an empty step plus four ramping toward the accent,
+     so the graph belongs to the palette instead of importing GitHub's green. */
+  --contrib-0: light-dark(#ebe4cd, #04303c);
+  --contrib-1: light-dark(#f2c8b4, #5c1f18);
+  --contrib-2: light-dark(#e89478, #932c20);
+  --contrib-3: light-dark(#dc5f45, #c93a28);
+  --contrib-4: light-dark(#b52823, #fb4934);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+
+  --color-heading: var(--heading);
+  --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-foreground-subtle: var(--foreground-subtle);
+
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-text: var(--accent-text);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-subtle: var(--accent-subtle);
+
+  --font-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* The hero deck fans its back cards to the right and throws the outgoing card
+   clear off the edge; both are meant to bleed, so clip the page axis rather
+   than let them create a horizontal scrollbar on narrow screens. */
+/* `clip` rather than `hidden`: hidden still makes the root a scroll container
+   that pans programmatically, so the bled card remained reachable. */
+html,
+body {
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--accent-subtle);
+  color: var(--heading);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Calm, fluid defaults: a soft ease-out that never snaps. */
+@theme inline {
+  --ease-calm: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes blink {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Focus pulse on an active architecture node. Scales about the node's own
+   centre, which the component sets via transform-origin. */
+@keyframes ping-rect {
+  0% {
+    transform: scale(1);
+    opacity: 0.35;
+  }
+  70%,
+  100% {
+    transform: scale(1.12);
+    opacity: 0;
+  }
+}
+
+@keyframes osaka-transit-pan {
+  from {
+    background-position:
+      0 0,
+      0 0,
+      0 0,
+      0 0;
+  }
+  to {
+    background-position:
+      420px 0,
+      -360px 0,
+      78px 78px,
+      78px 78px;
+  }
+}
+
+@keyframes osaka-neon-run {
+  from {
+    background-position:
+      0 0,
+      0 0;
+  }
+  to {
+    background-position:
+      0 0,
+      368px 0;
+  }
+}
+
+@keyframes osaka-reflection-shimmer {
+  0%,
+  100% {
+    background-position:
+      0 0,
+      0 0,
+      0 0;
+    opacity: 0.55;
+  }
+  50% {
+    background-position:
+      0 0,
+      -160px 0,
+      0 18px;
+    opacity: 0.82;
+  }
+}
+
+@keyframes osaka-scanline {
+  0% {
+    transform: translate3d(0, -6vh, 0);
+    opacity: 0;
+  }
+  12%,
+  62% {
+    opacity: 0.48;
+  }
+  100% {
+    transform: translate3d(0, 106vh, 0);
+    opacity: 0;
+  }
+}
+
+.osaka-transit {
+  animation: osaka-transit-pan 48s linear infinite;
+  will-change: background-position;
+}
+
+.osaka-neon {
+  animation: osaka-neon-run 16s linear infinite;
+  will-change: background-position;
+}
+
+.osaka-reflection {
+  animation: osaka-reflection-shimmer 9s ease-in-out infinite;
+  will-change: background-position, opacity;
+}
+
+.osaka-scan {
+  animation: osaka-scanline 8s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+button,
+a {
+  transition:
+    color 400ms var(--ease-calm),
+    background-color 400ms var(--ease-calm),
+    border-color 400ms var(--ease-calm),
+    opacity 400ms var(--ease-calm),
+    transform 400ms var(--ease-calm);
+}
+
+/* Theme toggle's circular wipe. The default cross-fade is suppressed so the
+   new theme is revealed purely by the clip-path animation the button drives. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* Belt and braces — the toggle also checks this before starting a wipe. */
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
