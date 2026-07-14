@@ -220,5 +220,48 @@
       "featured": false,
       "art": "landing"
     }
+  ],
+  "resume": "/hero/resume.pdf",
+  "resumePreview": "/hero/resume-preview.png",
+  "timeline": [
+    {
+      "year": "2005",
+      "icon": "born",
+      "title": "Born",
+      "detail": "26 July, 2005."
+    },
+    {
+      "year": "2010",
+      "icon": "school",
+      "title": "Started school",
+      "detail": "Primary through secondary, Sagar Public School."
+    },
+    {
+      "year": "2021",
+      "icon": "exam",
+      "title": "Class X",
+      "detail": "CBSE.",
+      "stat": "92.4%"
+    },
+    {
+      "year": "2023",
+      "icon": "exam",
+      "title": "Class XII",
+      "detail": "CBSE.",
+      "stat": "85.2%"
+    },
+    {
+      "year": "2023",
+      "icon": "college",
+      "title": "VIT Bhopal",
+      "detail": "Joined September 2023 — B.Tech, Computer Science (core)."
+    },
+    {
+      "year": "now",
+      "icon": "code",
+      "title": "Fourth year",
+      "detail": "Backend and systems. Go, Node, and the things behind them.",
+      "stat": "8.53 CGPA"
+    }
   ]
 }

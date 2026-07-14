@@ -1,7 +1,9 @@
 import Image from "next/image";
 import { GithubActivity } from "@/components/GithubActivity";
 import { Projects } from "@/components/Projects";
+import { Resume } from "@/components/Resume";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { Timeline } from "@/components/Timeline";
 import profile from "@/data/profile.json";
 
 const { name, about, stack, links } = profile;
@@ -44,7 +46,7 @@ export default function Home() {
           </p>
 
           <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-2">
-            {links.map((l) => (
+            {[...links, { label: "Résumé", href: profile.resume }].map((l) => (
               <a
                 key={l.label}
                 href={l.href}
@@ -97,8 +99,10 @@ export default function Home() {
           </dl>
         </section>
 
+        <Timeline />
         <Projects />
         <GithubActivity />
+        <Resume />
       </main>
 
       <footer className="flex flex-wrap items-center justify-between gap-2 border-t border-border py-8 font-mono text-[0.68rem] text-foreground-subtle">
