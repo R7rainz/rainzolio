@@ -72,12 +72,16 @@ function Calendar({ days }: { days: { date: string; count: number; level: number
             day ? (
               <rect
                 key={day.date}
+                className="contrib-cell"
                 x={w * STEP}
                 y={d * STEP}
                 width={CELL}
                 height={CELL}
                 rx="2"
                 fill={`var(--contrib-${day.level})`}
+                // Staggered by column so the year sweeps in left to right
+                // (~640ms end to end) instead of appearing all at once.
+                style={{ animationDelay: `${w * 12}ms` }}
               >
                 <title>{`${day.count} contribution${day.count === 1 ? "" : "s"} on ${day.date}`}</title>
               </rect>

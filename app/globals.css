@@ -102,11 +102,10 @@ body {
   font-family: var(--font-sans), system-ui, sans-serif;
 }
 
-/* The hero deck fans its back cards to the right and throws the outgoing card
-   clear off the edge; both are meant to bleed, so clip the page axis rather
-   than let them create a horizontal scrollbar on narrow screens. */
-/* `clip` rather than `hidden`: hidden still makes the root a scroll container
-   that pans programmatically, so the bled card remained reachable. */
+/* Project cards scale slightly on hover and can bleed past the column on narrow
+   screens; that's intentional, so clip the page axis rather than let it raise a
+   horizontal scrollbar. `clip` not `hidden` — hidden still makes the root a
+   scroll container that pans programmatically. */
 html,
 body {
   overflow-x: clip;
@@ -127,128 +126,74 @@ body {
   --ease-calm: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
 
-@keyframes blink {
-  to {
-    opacity: 0;
-  }
-}
-
-@keyframes fade-up {
+/* Contribution cells settling in, column by column. One-shot: a looping
+   background animation behind 367 cells would be noise, not delight. */
+@keyframes contrib-in {
   from {
     opacity: 0;
-    transform: translateY(3px);
+    transform: scale(0.4);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Focus pulse on an active architecture node. Scales about the node's own
-   centre, which the component sets via transform-origin. */
-@keyframes ping-rect {
-  0% {
     transform: scale(1);
-    opacity: 0.35;
-  }
-  70%,
-  100% {
-    transform: scale(1.12);
-    opacity: 0;
   }
 }
 
-@keyframes osaka-transit-pan {
+/* SVG rects scale from their top-left corner by default, which makes the grid
+   crawl. fill-box + centre keeps each cell popping in place. */
+.contrib-cell {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: contrib-in 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Bars grow via scaleX rather than width: the target width is an inline
+   percentage the keyframes can't see, and transforms don't trigger layout. */
+@keyframes bar-grow {
   from {
-    background-position:
-      0 0,
-      0 0,
-      0 0,
-      0 0;
+    transform: scaleX(0);
   }
   to {
-    background-position:
-      420px 0,
-      -360px 0,
-      78px 78px,
-      78px 78px;
+    transform: scaleX(1);
   }
 }
 
-@keyframes osaka-neon-run {
-  from {
-    background-position:
-      0 0,
-      0 0;
-  }
-  to {
-    background-position:
-      0 0,
-      368px 0;
-  }
+.wpm-bar {
+  transform-origin: left;
+  animation: bar-grow 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@keyframes osaka-reflection-shimmer {
+/* The monkey at the keyboard: hands alternate, head bobs, eyes blink. */
+@keyframes tap-down {
   0%,
   100% {
-    background-position:
-      0 0,
-      0 0,
-      0 0;
-    opacity: 0.55;
+    transform: translateY(-1.6px);
   }
   50% {
-    background-position:
-      0 0,
-      -160px 0,
-      0 18px;
-    opacity: 0.82;
+    transform: translateY(0.8px);
   }
 }
 
-@keyframes osaka-scanline {
-  0% {
-    transform: translate3d(0, -6vh, 0);
-    opacity: 0;
-  }
-  12%,
-  62% {
-    opacity: 0.48;
-  }
+@keyframes bob {
+  0%,
   100% {
-    transform: translate3d(0, 106vh, 0);
-    opacity: 0;
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(0.7px);
   }
 }
 
-.osaka-transit {
-  animation: osaka-transit-pan 48s linear infinite;
-  will-change: background-position;
-}
-
-.osaka-neon {
-  animation: osaka-neon-run 16s linear infinite;
-  will-change: background-position;
-}
-
-.osaka-reflection {
-  animation: osaka-reflection-shimmer 9s ease-in-out infinite;
-  will-change: background-position, opacity;
-}
-
-.osaka-scan {
-  animation: osaka-scanline 8s ease-in-out infinite;
-  will-change: transform, opacity;
+@keyframes monkey-blink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  96% {
+    transform: scaleY(0.1);
+  }
 }
 
 button,

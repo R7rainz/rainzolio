@@ -1,3 +1,4 @@
+import { TypingMonkey } from "@/components/TypingMonkey";
 import { getTypingStats } from "@/lib/monkeytype";
 
 /** Server component — Monkeytype is hit at build/ISR time, never from the browser. */
@@ -38,22 +39,24 @@ export async function TypingStats() {
             <span className="mt-1 font-mono text-[0.65rem] uppercase tracking-[0.15em] text-foreground-subtle">
               60s · {t.sixty.acc}% acc
             </span>
+            <TypingMonkey className="mt-4 h-11 w-16" />
           </div>
         )}
 
         {/* Personal bests per duration, scaled against the fastest. */}
         <div className="flex flex-col justify-center gap-2">
-          {t.bests.map((b) => (
+          {t.bests.map((b, i) => (
             <div key={b.seconds} className="flex items-center gap-3">
               <span className="w-8 shrink-0 text-right font-mono text-[0.65rem] tabular-nums text-foreground-subtle">
                 {b.seconds}s
               </span>
               <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-border/60">
                 <span
-                  className="block h-full rounded-full"
+                  className="wpm-bar block h-full rounded-full"
                   style={{
                     width: `${(b.wpm / peak) * 100}%`,
                     backgroundColor: b.seconds === 60 ? "var(--accent)" : "var(--contrib-2)",
+                    animationDelay: `${i * 90}ms`,
                   }}
                 />
               </span>
