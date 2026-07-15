@@ -4,6 +4,7 @@ import { Projects } from "@/components/Projects";
 import { Resume } from "@/components/Resume";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Timeline } from "@/components/Timeline";
+import { TypingStats } from "@/components/TypingStats";
 import profile from "@/data/profile.json";
 
 const { name, about, stack, links } = profile;
@@ -102,6 +103,7 @@ export default function Home() {
         <Timeline />
         <Projects />
         <GithubActivity />
+        <TypingStats />
         <Resume />
       </main>
 
