@@ -3,6 +3,7 @@ import { GithubActivity } from "@/components/GithubActivity";
 import { Projects } from "@/components/Projects";
 import { Resume } from "@/components/Resume";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { PortfolioGuide } from "@/components/guide/PortfolioGuide";
 import { Timeline } from "@/components/Timeline";
 import { TypingStats } from "@/components/TypingStats";
 import profile from "@/data/profile.json";
@@ -22,7 +23,7 @@ export default function Home() {
 
       <main>
         {/* Hero */}
-        <section className="py-10">
+        <section id="hero" className="py-10">
           <div className="flex items-center gap-4">
             <Image
               src={name.avatar}
@@ -111,6 +112,8 @@ export default function Home() {
         <span>{name.location}</span>
         <span>built by rainz</span>
       </footer>
+
+      <PortfolioGuide />
     </div>
   );
 }
