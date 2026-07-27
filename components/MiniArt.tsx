@@ -44,24 +44,29 @@ const ART: Record<string, (active: boolean) => React.ReactElement> = {
     </svg>
   ),
 
-  // TuneSynz — an equalizer
-  waveform: (active) => (
+  // TaskFlow — a TOTP token, its six digits rolling over
+  token: (active) => (
     <svg viewBox="0 0 64 40" className="h-full w-full text-accent" aria-hidden>
-      {[8, 16, 24, 32, 40, 48, 56].map((x, i) => (
-        <rect key={x} x={x} y="14" width="3" height="12" rx="1.5" fill="currentColor" opacity="0.75">
+      <g {...stroke} opacity="0.5">
+        <rect x="8" y="8" width="48" height="24" rx="4" />
+      </g>
+      {Array.from({ length: 6 }).map((_, i) => (
+        <rect
+          key={i}
+          x={14 + i * 6.5}
+          y="16"
+          width="4"
+          height="8"
+          rx="1"
+          fill="currentColor"
+          opacity={0.25}
+        >
           {active && (
             <animate
-              attributeName="height"
-              values={`${6 + (i % 3) * 6};${22 - (i % 4) * 4};${6 + (i % 3) * 6}`}
-              dur={`${0.9 + i * 0.13}s`}
-              repeatCount="indefinite"
-            />
-          )}
-          {active && (
-            <animate
-              attributeName="y"
-              values={`${20 - (i % 3) * 3};${9 + (i % 4) * 2};${20 - (i % 3) * 3}`}
-              dur={`${0.9 + i * 0.13}s`}
+              attributeName="opacity"
+              values="0.25;0.9;0.25"
+              dur="1.8s"
+              begin={`${i * 0.18}s`}
               repeatCount="indefinite"
             />
           )}

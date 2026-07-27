@@ -1,11 +1,11 @@
 "use client";
 
 import type { ComponentType } from "react";
-import { Auth } from "@/components/showcases/Auth";
 import { Banners } from "@/components/showcases/Banners";
 import { Dotfiles } from "@/components/showcases/Dotfiles";
 import { Mail } from "@/components/showcases/Mail";
 import { Pulse } from "@/components/showcases/Pulse";
+import { Sync } from "@/components/showcases/Sync";
 
 /**
  * Backend projects have no interface to screenshot, so each gets a small
@@ -18,7 +18,7 @@ type ShowcaseProps = { repos: number; stars: number };
 const REGISTRY: Record<string, ComponentType<ShowcaseProps>> = {
   pulse: Pulse as ComponentType<ShowcaseProps>,
   mail: Mail as ComponentType<ShowcaseProps>,
-  auth: Auth as ComponentType<ShowcaseProps>,
+  sync: Sync as ComponentType<ShowcaseProps>,
   dotfiles: Dotfiles as ComponentType<ShowcaseProps>,
   banners: Banners,
 };

@@ -111,22 +111,21 @@
       "backendOnly": true
     },
     {
-      "name": "TaskFlow",
-      "blurb": "An authentication microservice — JWT sessions with TOTP two-factor, built to be dropped in front of something else.",
-      "role": "Whole service",
+      "name": "SongSpot",
+      "blurb": "A collaborative listening room. Share a six-character code and everyone lands on the same second of the same song. The Go server never streams audio — it keeps a playhead anchor in Redis and fans out play, pause and seek over WebSockets, while each browser drives its own YouTube player.",
+      "role": "Go sync server, Redis pub/sub, React client",
       "stack": [
+        "Go",
+        "Redis",
+        "WebSockets",
+        "React",
         "TypeScript",
-        "Express",
-        "Prisma",
-        "Postgres",
-        "JWT",
-        "TOTP"
+        "Vite"
       ],
-      "repo": "https://github.com/R7rainz/TaskFlow",
-      "demo": null,
-      "showcase": "auth",
-      "featured": true,
-      "backendOnly": true
+      "repo": "https://github.com/R7rainz/songspot",
+      "demo": "https://songspot-pi.vercel.app",
+      "showcase": "sync",
+      "featured": true
     },
     {
       "name": "Arch rice — dotfiles",
@@ -145,6 +144,24 @@
       "featured": true
     },
     {
+      "name": "TaskFlow",
+      "blurb": "An authentication microservice — JWT sessions with TOTP two-factor, built to be dropped in front of something else.",
+      "role": null,
+      "stack": [
+        "TypeScript",
+        "Express",
+        "Prisma",
+        "Postgres",
+        "JWT",
+        "TOTP"
+      ],
+      "repo": "https://github.com/R7rainz/TaskFlow",
+      "demo": null,
+      "showcase": null,
+      "featured": false,
+      "art": "token"
+    },
+    {
       "name": "BrainBox",
       "blurb": "Collaborative AI note-taking app with live multiplayer editing.",
       "role": null,
@@ -158,22 +175,6 @@
       "showcase": null,
       "featured": false,
       "art": "notes"
-    },
-    {
-      "name": "TuneSynz",
-      "blurb": "Social music discovery built on the Spotify API.",
-      "role": null,
-      "stack": [
-        "Next.js",
-        "TypeScript",
-        "Supabase",
-        "Spotify API"
-      ],
-      "repo": "https://github.com/R7rainz/tunesyncz",
-      "demo": null,
-      "showcase": null,
-      "featured": false,
-      "art": "waveform"
     },
     {
       "name": "CodeQuest Lite",
