@@ -45,7 +45,7 @@ export function ThemeToggle() {
       onClick={toggle}
       aria-label={`Switch to ${dark ? "light" : "dark"} theme`}
       title={`Switch to ${dark ? "light" : "dark"} theme`}
-      className="group relative grid h-9 w-9 place-items-center rounded-full border border-border text-foreground-muted transition-colors duration-500 hover:border-border-strong hover:text-accent-text"
+      className="group relative grid h-9 w-9 place-items-center rounded-full border border-border bg-surface/60 text-foreground-muted transition-colors duration-500 hover:border-border-strong hover:text-accent-text"
     >
       <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" aria-hidden>
         {/* One circle morphs between sun and moon: the mask slides in to bite a

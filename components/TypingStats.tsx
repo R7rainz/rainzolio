@@ -10,28 +10,30 @@ export async function TypingStats() {
   const peak = Math.max(...t.bests.map((b) => b.wpm));
 
   return (
-    <section id="typing" className="border-t border-border py-16">
-      <div className="flex flex-wrap items-baseline justify-between gap-3">
-        <h2 className="font-mono text-[0.7rem] uppercase tracking-[0.25em] text-foreground-subtle">
-          Typing
-        </h2>
+    <section id="typing" className="reveal-section scroll-mt-20 border-t border-border py-16 sm:py-20">
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p className="section-index">05 / By the numbers</p>
+          <h2 className="mt-3 text-2xl font-semibold tracking-[-0.035em] text-heading sm:text-3xl">
+            Fast hands. Careful code.
+          </h2>
+        </div>
         <a
           href={t.profileUrl}
           target="_blank"
           rel="noreferrer"
-          className="group relative font-mono text-[0.72rem] text-foreground hover:text-accent-text"
+          className="font-mono text-[0.66rem] text-foreground-subtle hover:text-heading"
         >
-          monkeytype
-          <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-accent transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:w-full" />
+          Monkeytype profile ↗
         </a>
       </div>
 
-      <div className="mt-8 grid gap-8 sm:grid-cols-[auto_1fr] sm:gap-12">
+      <div className="mt-8 grid gap-8 rounded-2xl border border-border bg-surface/55 p-6 sm:grid-cols-[auto_1fr] sm:gap-12">
         {/* Headline: the 60s test is Monkeytype's benchmark. */}
         {t.sixty && (
           <div className="flex flex-col">
             <div className="flex items-baseline gap-1.5">
-              <span className="font-mono text-4xl font-semibold tabular-nums text-accent-text">
+              <span className="font-mono text-5xl font-semibold tabular-nums tracking-[-0.06em] text-accent-text">
                 {t.sixty.wpm}
               </span>
               <span className="font-mono text-sm text-foreground-muted">wpm</span>
@@ -39,7 +41,7 @@ export async function TypingStats() {
             <span className="mt-1 font-mono text-[0.65rem] uppercase tracking-[0.15em] text-foreground-subtle">
               60s · {t.sixty.acc}% acc
             </span>
-            <TypingMonkey className="mt-4 h-11 w-16" />
+            <TypingMonkey className="mt-5 h-12 w-20" />
           </div>
         )}
 
@@ -68,7 +70,7 @@ export async function TypingStats() {
         </div>
       </div>
 
-      <p className="mt-7 font-mono text-[0.68rem] leading-relaxed text-foreground-subtle">
+      <p className="mt-5 font-mono text-[0.64rem] leading-relaxed text-foreground-subtle">
         {t.tests.toLocaleString()} tests · {t.hours}h typing
         {t.rank && (
           <>

@@ -21,9 +21,10 @@ function getSnapshot(): Theme {
   return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
 }
 
-// SSR renders light; the boot script fixes the DOM before first paint.
+// SSR renders the default dark theme; the boot script fixes a stored light
+// preference before first paint.
 function getServerSnapshot(): Theme {
-  return "light";
+  return "dark";
 }
 
 export function useTheme(): Theme {

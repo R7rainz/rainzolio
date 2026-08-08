@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-/* Tailwind's `dark:` escape hatch, kept in sync with the token system below:
-   follow the OS unless [data-theme] on <html> overrides it. */
 @custom-variant dark {
   @media (prefers-color-scheme: dark) {
     &:where(:root:not([data-theme="light"]), :root:not([data-theme="light"]) *) {
@@ -13,56 +11,37 @@
   }
 }
 
-/*
- * Palette — Solarized Osaka, both ways.
- * light: Solarized Light — base3 paper, base01 ink, solarized red accent
- * dark:  Solarized Osaka — deep teal base, solarized ink ladder, gruvbox red accent
- *
- * Both halves share the solarized ink ladder, so the two themes read as one
- * identity rather than two designs.
- *
- * light-dark() resolves against `color-scheme`, so every token is one line and
- * <html data-theme="dark|light"> is all a toggle needs to touch.
- */
+/* Neutral ink and paper with one signal colour. The hero remains black in
+   both modes, giving the light theme the same identity as the dark one. */
 :root {
   color-scheme: light dark;
 
-  --background: light-dark(#fdf6e3, #001b24);
-  --surface: light-dark(#eee8d5, #002b36);
-  --surface-raised: light-dark(#fffdf6, #073642);
+  --background: light-dark(#f7f7f5, #0b0b0d);
+  --surface: light-dark(#ffffff, #121215);
+  --surface-raised: light-dark(#f1f1ee, #18181c);
 
-  --border: light-dark(#e3dcc4, #0d3f4b);
-  --border-strong: light-dark(#cfc7ab, #14505e);
+  --border: light-dark(#deded9, #27272d);
+  --border-strong: light-dark(#b9b9b3, #41414a);
 
-  /* Solarized's ink ladder. The light side is shifted one step darker than the
-     canonical scheme: base1/base0 only reach 2.5:1 and 2.9:1 on base3, so the
-     usual body colours would fail AA. Ends at base00, which still clears 4.1:1
-     for de-emphasised text. */
-  --heading: light-dark(#073642, #eee8d5);
-  --foreground: light-dark(#495f66, #93a1a1);
-  --foreground-muted: light-dark(#586e75, #839496);
-  --foreground-subtle: light-dark(#657b83, #657b83);
+  --heading: light-dark(#161618, #f4f4f5);
+  --foreground: light-dark(#303034, #d0d0d4);
+  --foreground-muted: light-dark(#5d5d63, #a0a0a8);
+  --foreground-subtle: light-dark(#77777e, #707078);
 
-  --accent: light-dark(#dc322f, #fb4934);
-  --accent-hover: light-dark(#cb4b16, #ff6b5a);
-  /* Solarized red lands at 4.27:1 on base3 — just shy of AA — so text/links
-     take a darkened red. On the dark base #fb4934 already clears 5.1:1. */
-  --accent-text: light-dark(#b52823, #fb4934);
-  /* Ink on an --accent fill. White clears 4.6:1 on solarized red but only
-     3.4:1 on gruvbox red, where the deep base wins at 5.1:1 — hence the flip. */
-  --accent-foreground: light-dark(#ffffff, #001b24);
+  --accent: light-dark(#3759c7, #8ea5ff);
+  --accent-hover: light-dark(#2d48a4, #a7b7ff);
+  --accent-text: light-dark(#3759c7, #8ea5ff);
+  --accent-foreground: light-dark(#ffffff, #10111a);
   --accent-subtle: light-dark(
-    color-mix(in oklab, #dc322f 11%, transparent),
-    color-mix(in oklab, #fb4934 14%, transparent)
+    color-mix(in oklab, #3759c7 10%, transparent),
+    color-mix(in oklab, #8ea5ff 9%, transparent)
   );
 
-  /* Contribution calendar: an empty step plus four ramping toward the accent,
-     so the graph belongs to the palette instead of importing GitHub's green. */
-  --contrib-0: light-dark(#ebe4cd, #04303c);
-  --contrib-1: light-dark(#f2c8b4, #5c1f18);
-  --contrib-2: light-dark(#e89478, #932c20);
-  --contrib-3: light-dark(#dc5f45, #c93a28);
-  --contrib-4: light-dark(#b52823, #fb4934);
+  --contrib-0: light-dark(#e6e6e3, #18181c);
+  --contrib-1: light-dark(#d6dcf3, #252b42);
+  --contrib-2: light-dark(#aebbea, #3e4d82);
+  --contrib-3: light-dark(#7189df, #637bd0);
+  --contrib-4: light-dark(#3759c7, #8ea5ff);
 }
 
 :root[data-theme="light"] {
@@ -77,23 +56,30 @@
   --color-background: var(--background);
   --color-surface: var(--surface);
   --color-surface-raised: var(--surface-raised);
-
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
-
   --color-heading: var(--heading);
   --color-foreground: var(--foreground);
   --color-foreground-muted: var(--foreground-muted);
   --color-foreground-subtle: var(--foreground-subtle);
-
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
   --color-accent-text: var(--accent-text);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent-subtle: var(--accent-subtle);
-
   --font-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+  --ease-calm: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+html,
+body {
+  overflow-x: clip;
 }
 
 body {
@@ -102,33 +88,115 @@ body {
   font-family: var(--font-sans), system-ui, sans-serif;
 }
 
-/* Project cards scale slightly on hover and can bleed past the column on narrow
-   screens; that's intentional, so clip the page axis rather than let it raise a
-   horizontal scrollbar. `clip` not `hidden` — hidden still makes the root a
-   scroll container that pans programmatically. */
-html,
-body {
-  overflow-x: clip;
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  content: "";
+  opacity: 0.12;
+  background-image: linear-gradient(to right, var(--border) 1px, transparent 1px);
+  background-size: min(8vw, 110px) 100%;
+  mask-image: linear-gradient(to bottom, black, transparent 42rem);
 }
 
 ::selection {
-  background: var(--accent-subtle);
-  color: var(--heading);
+  background: var(--accent);
+  color: var(--accent-foreground);
 }
 
 :focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 2px;
+  outline-offset: 3px;
 }
 
-/* Calm, fluid defaults: a soft ease-out that never snaps. */
-@theme inline {
-  --ease-calm: cubic-bezier(0.22, 1, 0.36, 1);
+button,
+a {
+  transition:
+    color 320ms var(--ease-calm),
+    background-color 320ms var(--ease-calm),
+    border-color 320ms var(--ease-calm),
+    opacity 320ms var(--ease-calm),
+    filter 320ms var(--ease-calm),
+    transform 320ms var(--ease-calm);
 }
 
+.section-index {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
 
-/* Contribution cells settling in, column by column. One-shot: a looping
-   background animation behind 367 cells would be noise, not delight. */
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-copy > * {
+  animation: hero-in 850ms var(--ease-calm) both;
+}
+
+.hero-copy > :nth-child(2) {
+  animation-delay: 80ms;
+}
+
+.hero-copy > :nth-child(3) {
+  animation-delay: 150ms;
+}
+
+.hero-copy > :nth-child(4) {
+  animation-delay: 220ms;
+}
+
+.hero-copy > :nth-child(5) {
+  animation-delay: 290ms;
+}
+
+.scene-card {
+  animation: hero-in 1s 180ms var(--ease-calm) both;
+}
+
+@keyframes status-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 38%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 6px transparent;
+  }
+}
+
+.status-dot {
+  animation: status-pulse 2.4s ease-out infinite;
+}
+
+@keyframes section-in {
+  from {
+    opacity: 0.3;
+    transform: translateY(36px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  .reveal-section {
+    animation: section-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 75%;
+  }
+}
+
 @keyframes contrib-in {
   from {
     opacity: 0;
@@ -140,16 +208,12 @@ body {
   }
 }
 
-/* SVG rects scale from their top-left corner by default, which makes the grid
-   crawl. fill-box + centre keeps each cell popping in place. */
 .contrib-cell {
   transform-box: fill-box;
   transform-origin: center;
-  animation: contrib-in 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: contrib-in 420ms var(--ease-calm) both;
 }
 
-/* Bars grow via scaleX rather than width: the target width is an inline
-   percentage the keyframes can't see, and transforms don't trigger layout. */
 @keyframes bar-grow {
   from {
     transform: scaleX(0);
@@ -161,10 +225,9 @@ body {
 
 .wpm-bar {
   transform-origin: left;
-  animation: bar-grow 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: bar-grow 900ms var(--ease-calm) both;
 }
 
-/* The monkey at the keyboard: hands alternate, head bobs, eyes blink. */
 @keyframes tap-down {
   0%,
   100% {
@@ -196,40 +259,39 @@ body {
   }
 }
 
-button,
-a {
-  transition:
-    color 400ms var(--ease-calm),
-    background-color 400ms var(--ease-calm),
-    border-color 400ms var(--ease-calm),
-    opacity 400ms var(--ease-calm),
-    transform 400ms var(--ease-calm);
-}
-
-/* Theme toggle's circular wipe. The default cross-fade is suppressed so the
-   new theme is revealed purely by the clip-path animation the button drives. */
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
   mix-blend-mode: normal;
 }
+
 ::view-transition-old(root) {
   z-index: 1;
 }
+
 ::view-transition-new(root) {
   z-index: 2;
 }
 
+@media (max-width: 639px) {
+  body::before {
+    background-size: 25vw 100%;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
   }
-  /* Belt and braces — the toggle also checks this before starting a wipe. */
+
   ::view-transition-group(*),
   ::view-transition-old(*),
   ::view-transition-new(*) {

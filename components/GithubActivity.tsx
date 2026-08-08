@@ -6,11 +6,26 @@ export async function GithubActivity() {
   if (!stats && !contrib) return null;
 
   return (
-    <section id="github" className="border-t border-border py-16">
-      <SectionHeading>GitHub</SectionHeading>
+    <section id="github" className="reveal-section scroll-mt-20 border-t border-border py-16 sm:py-20">
+      <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+        <div>
+          <p className="section-index">04 / Open source</p>
+          <h2 className="mt-3 text-2xl font-semibold tracking-[-0.035em] text-heading sm:text-3xl">
+            Built in public.
+          </h2>
+        </div>
+        <a
+          href="https://github.com/R7rainz"
+          target="_blank"
+          rel="noreferrer"
+          className="w-fit font-mono text-[0.66rem] text-foreground-subtle hover:text-heading"
+        >
+          @R7rainz ↗
+        </a>
+      </div>
 
       {stats && (
-        <div className="mt-8 flex flex-wrap items-baseline gap-x-10 gap-y-5">
+        <div className="mt-10 grid grid-cols-2 overflow-hidden rounded-2xl border border-border bg-surface/55 sm:grid-cols-4">
           <Stat value={stats.repos} label="repos" />
           <Stat value={stats.stars} label="stars" />
           <Stat value={stats.followers} label="followers" />
@@ -21,11 +36,11 @@ export async function GithubActivity() {
       {contrib && <Calendar days={contrib.days} />}
 
       {stats && stats.topLanguages.length > 0 && (
-        <div className="mt-7 flex flex-wrap gap-1.5">
+        <div className="mt-6 flex flex-wrap gap-2">
           {stats.topLanguages.map((lang) => (
             <span
               key={lang}
-              className="rounded-full border border-border px-2.5 py-0.5 font-mono text-[0.7rem] text-foreground-muted"
+              className="rounded-full border border-border px-3 py-1 font-mono text-[0.62rem] text-foreground-muted"
             >
               {lang}
             </span>
@@ -60,7 +75,7 @@ function Calendar({ days }: { days: { date: string; count: number; level: number
   const height = 7 * STEP - GAP;
 
   return (
-    <div className="mt-8">
+    <div className="mt-6 rounded-2xl border border-border bg-surface/40 p-4 sm:p-6">
       <svg
         viewBox={`0 0 ${width} ${height}`}
         className="h-auto w-full"
@@ -90,7 +105,7 @@ function Calendar({ days }: { days: { date: string; count: number; level: number
         )}
       </svg>
 
-      <div className="mt-3 flex items-center gap-2 font-mono text-[0.65rem] text-foreground-subtle">
+      <div className="mt-4 flex items-center gap-2 font-mono text-[0.6rem] text-foreground-subtle">
         <span>less</span>
         {[0, 1, 2, 3, 4].map((l) => (
           <span
@@ -107,21 +122,13 @@ function Calendar({ days }: { days: { date: string; count: number; level: number
 
 function Stat({ value, label }: { value: number; label: string }) {
   return (
-    <div className="flex flex-col">
-      <span className="font-mono text-2xl font-semibold tabular-nums text-heading">
+    <div className="flex flex-col border-b border-r border-border p-5 even:border-r-0 sm:border-b-0 sm:even:border-r sm:last:border-r-0 sm:p-6">
+      <span className="font-mono text-2xl font-semibold tabular-nums tracking-tight text-heading sm:text-3xl">
         {value.toLocaleString()}
       </span>
-      <span className="mt-1 font-mono text-[0.65rem] uppercase tracking-[0.15em] text-foreground-subtle">
+      <span className="mt-2 font-mono text-[0.58rem] uppercase tracking-[0.14em] text-foreground-subtle">
         {label}
       </span>
     </div>
-  );
-}
-
-function SectionHeading({ children }: { children: React.ReactNode }) {
-  return (
-    <h2 className="font-mono text-[0.7rem] uppercase tracking-[0.25em] text-foreground-subtle">
-      {children}
-    </h2>
   );
 }

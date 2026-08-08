@@ -19,20 +19,20 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ronak Kamboj — Developer",
+  title: "Ronak Kamboj — Backend & Systems Engineer",
   description:
-    "Computer Science student at VIT Bhopal. Fedora KDE user who builds things for the web.",
+    "Backend and systems engineer building reliable services with Go, Node.js, PostgreSQL, Redis, and Kafka.",
 };
 
 // Runs before first paint so a stored dark theme never flashes light.
-// Defaults to light when nothing is stored — the OS preference is deliberately
-// ignored; the toggle is the only thing that decides.
+// Defaults to the site's signature dark theme; the toggle is the only thing
+// that decides after that.
 const BOOT_THEME = `
 try {
   var t = localStorage.getItem('rainz-theme');
-  document.documentElement.dataset.theme = t === 'dark' ? 'dark' : 'light';
+  document.documentElement.dataset.theme = t === 'light' ? 'light' : 'dark';
 } catch (e) {
-  document.documentElement.dataset.theme = 'light';
+  document.documentElement.dataset.theme = 'dark';
 }
 `;
 
@@ -44,7 +44,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      data-theme="light"
+      data-theme="dark"
       suppressHydrationWarning
       className={`${sans.variable} ${mono.variable} h-full antialiased`}
     >

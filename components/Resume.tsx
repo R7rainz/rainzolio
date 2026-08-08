@@ -16,28 +16,29 @@ export function Resume() {
   if (!src) return null;
 
   return (
-    <section id="resume" className="border-t border-border py-16">
-      <div className="flex flex-wrap items-baseline justify-between gap-3">
-        <h2 className="font-mono text-[0.7rem] uppercase tracking-[0.25em] text-foreground-subtle">
-          Résumé
-        </h2>
+    <section id="resume" className="reveal-section scroll-mt-20 border-t border-border py-16 sm:py-20">
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p className="section-index">06 / Résumé</p>
+          <h2 className="mt-3 text-2xl font-semibold tracking-[-0.035em] text-heading sm:text-3xl">
+            The one-page version.
+          </h2>
+        </div>
         <div className="flex items-center gap-5">
           <a
             href={src}
             target="_blank"
             rel="noreferrer"
-            className="group relative font-mono text-[0.72rem] text-foreground hover:text-accent-text"
+            className="font-mono text-[0.66rem] text-foreground-subtle hover:text-heading"
           >
-            open
-            <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-accent transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:w-full" />
+            Open ↗
           </a>
           <a
             href={src}
             download="ronak-kamboj-resume.pdf"
-            className="group relative font-mono text-[0.72rem] text-foreground hover:text-accent-text"
+            className="font-mono text-[0.66rem] text-foreground-subtle hover:text-heading"
           >
-            download
-            <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-accent transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:w-full" />
+            Download ↓
           </a>
         </div>
       </div>
@@ -46,16 +47,16 @@ export function Resume() {
         href={src}
         target="_blank"
         rel="noreferrer"
-        className="group/card relative mt-6 block overflow-hidden rounded-xl border border-border bg-surface/40 transition-[border-color,box-shadow,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-accent/50 hover:shadow-[0_18px_50px_-12px_var(--accent-subtle)]"
+        className="group/card relative mt-8 block overflow-hidden rounded-2xl border border-border bg-surface/55 transition-[border-color,box-shadow] duration-500 ease-calm hover:border-border-strong hover:shadow-[0_20px_60px_-45px_var(--accent-subtle)]"
       >
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-0.5 origin-top scale-y-0 bg-accent transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:scale-y-100"
+          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-0.5 origin-top scale-y-0 bg-accent transition-transform duration-500 ease-calm group-hover/card:scale-y-100"
         />
 
         {/* Only the top of the page — showing all of it isn't a preview, it's
             just the résumé again, and an A4 at full width is a wall of text. */}
-        <div className="relative h-[clamp(220px,34vw,330px)] overflow-hidden">
+        <div className="relative h-[clamp(240px,40vw,430px)] overflow-hidden">
           <Image
             src={profile.resumePreview}
             alt="Résumé, page 1"

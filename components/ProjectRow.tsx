@@ -35,40 +35,36 @@ export function ProjectRow({
       onMouseLeave={() => setOpen(false)}
       onFocus={() => setOpen(true)}
       onBlur={() => setOpen(false)}
-      className="group relative block border-b border-border py-4 transition-colors duration-500 hover:border-accent/50 focus:outline-none focus-visible:border-accent"
+      className="group relative block border-b border-border py-5 transition-colors duration-500 hover:border-border-strong focus:outline-none focus-visible:border-accent"
     >
       {/* Red rail wipes in from the left, matching the featured cards. */}
       <span
         aria-hidden
-        className="pointer-events-none absolute bottom-0 left-0 h-px w-0 bg-accent transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:w-full group-focus-visible:w-full"
+        className="pointer-events-none absolute bottom-0 left-0 h-px w-0 bg-accent transition-all duration-500 ease-calm group-hover:w-full group-focus-visible:w-full"
       />
 
       <div className="flex items-baseline justify-between gap-4">
-        <span className="flex items-center gap-2 text-[0.95rem] font-medium text-heading transition-colors duration-300 group-hover:text-accent-text group-focus-visible:text-accent-text">
-          <span className="h-1 w-1 rounded-full bg-accent opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-visible:opacity-100" />
+        <span className="flex items-center gap-2 text-base font-medium text-heading transition-colors duration-300 group-hover:text-accent-text group-focus-visible:text-accent-text">
+          <span className="h-1.5 w-1.5 rounded-full bg-accent opacity-40 transition-opacity duration-500 group-hover:opacity-100 group-focus-visible:opacity-100" />
           {name}
         </span>
-        <span className="shrink-0 font-mono text-[0.62rem] text-foreground-subtle transition-colors duration-500 group-hover:text-foreground-muted">
+        <span className="hidden shrink-0 font-mono text-[0.6rem] text-foreground-subtle transition-colors duration-500 group-hover:text-foreground-muted sm:block">
           {stack.slice(0, 3).join(" · ")}
         </span>
       </div>
 
       <div
-        className="grid transition-[grid-template-rows,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
-        style={{ gridTemplateRows: open ? "1fr" : "0fr", opacity: open ? 1 : 0 }}
+        className="grid grid-rows-[1fr] opacity-100 transition-[grid-template-rows,opacity] duration-500 ease-calm sm:grid-rows-[0fr] sm:opacity-0 sm:group-hover:grid-rows-[1fr] sm:group-hover:opacity-100 sm:group-focus-visible:grid-rows-[1fr] sm:group-focus-visible:opacity-100"
       >
         <div className="overflow-hidden">
           <div className="flex items-start gap-5 pt-3">
             <div className="flex-1">
-              <p className="text-pretty text-[0.85rem] leading-relaxed text-foreground-muted">
+              <p className="text-pretty text-sm leading-6 text-foreground-muted">
                 {blurb}
               </p>
-              <div className="mt-2.5 flex flex-wrap gap-1.5">
+              <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1.5">
                 {stack.map((s) => (
-                  <span
-                    key={s}
-                    className="rounded border border-border px-1.5 py-0.5 font-mono text-[0.6rem] text-foreground-muted"
-                  >
+                  <span key={s} className="font-mono text-[0.58rem] text-foreground-subtle">
                     {s}
                   </span>
                 ))}
