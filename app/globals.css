@@ -11,8 +11,8 @@
   }
 }
 
-/* Kanagawa Dragon, kept intentionally close to OLED black. Dragon red is the
-   single signal colour; everything else stays warm ink and paper. */
+/* OLED Kanagawa Dragon by default; the toggle swaps to a lighter-dark
+   Catppuccin Macchiato surface with Dragon red and Catppuccin rose accents. */
 :root {
   color-scheme: light dark;
 
@@ -45,7 +45,31 @@
 }
 
 :root[data-theme="light"] {
-  color-scheme: light;
+  color-scheme: dark;
+
+  --background: #24273a;
+  --surface: #2b2f44;
+  --surface-raised: #363a4f;
+
+  --border: #3d4158;
+  --border-strong: #5b6078;
+
+  --heading: #cad3f5;
+  --foreground: #b8c0e0;
+  --foreground-muted: #a5adcb;
+  --foreground-subtle: #939ab7;
+
+  --accent: #c4746e;
+  --accent-hover: #ea999c;
+  --accent-text: #f2a6a0;
+  --accent-foreground: #1e2030;
+  --accent-subtle: color-mix(in oklab, #c4746e 16%, transparent);
+
+  --contrib-0: #2b2f44;
+  --contrib-1: #3d4158;
+  --contrib-2: #5b6078;
+  --contrib-3: #a5adcb;
+  --contrib-4: #c4746e;
 }
 
 :root[data-theme="dark"] {
