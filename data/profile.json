@@ -71,7 +71,7 @@
         "OpenAI"
       ],
       "repo": "https://github.com/R7rainz/switchyard",
-      "demo": null,
+      "demo": "https://switchyard-alpha.vercel.app",
       "showcase": "switchyard",
       "featured": true
     },

@@ -2,7 +2,7 @@ import Image from "next/image";
 import profile from "@/data/profile.json";
 
 /**
- * Résumé section with an inline preview.
+ * Resume section with an inline preview.
  *
  * The preview is a committed PNG of page 1 (see scripts/resume-preview.mjs),
  * not an embedded <object>/<iframe>. Embedding depends on a browser PDF plugin,
@@ -19,7 +19,7 @@ export function Resume() {
     <section id="resume" className="border-t border-border py-16">
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <h2 className="font-mono text-[0.7rem] uppercase tracking-[0.25em] text-foreground-subtle">
-          Résumé
+          Resume
         </h2>
         <div className="flex items-center gap-5">
           <a
@@ -58,7 +58,7 @@ export function Resume() {
         <div className="relative h-[clamp(220px,34vw,330px)] overflow-hidden">
           <Image
             src={profile.resumePreview}
-            alt="Résumé, page 1"
+            alt="Resume, page 1"
             width={1241}
             height={1754}
             sizes="(max-width: 768px) 100vw, 704px"
