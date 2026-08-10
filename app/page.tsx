@@ -25,7 +25,7 @@ export default function Home() {
 
       <main>
         {/* Hero */}
-        <section className="py-10">
+        <section className="hero-surface relative isolate my-2 overflow-hidden border-y border-border px-1 py-10 sm:py-12">
           <div className="flex items-center gap-4">
             <Image
               src={name.avatar}
@@ -50,7 +50,7 @@ export default function Home() {
           </p>
 
           <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-2">
-            {[...links, { label: "Résumé", href: profile.resume }].map((l) => (
+            {[...links, { label: "Resume", href: profile.resume }].map((l) => (
               <a
                 key={l.label}
                 href={l.href}

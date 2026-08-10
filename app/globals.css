@@ -11,8 +11,8 @@
   }
 }
 
-/* Kanagawa Dragon, kept intentionally close to OLED black. The aqua/stone
-   signal is muted enough to support the content instead of becoming the UI. */
+/* Kanagawa Dragon, kept intentionally close to OLED black. Dragon red is the
+   single signal colour; everything else stays warm ink and paper. */
 :root {
   color-scheme: light dark;
 
@@ -28,20 +28,20 @@
   --foreground-muted: light-dark(#6c6a64, #9a9a91);
   --foreground-subtle: light-dark(#87847b, #777870);
 
-  --accent: light-dark(#5b6a63, #9aa9a2);
-  --accent-hover: light-dark(#46544f, #b3c4bc);
-  --accent-text: light-dark(#53635c, #a7b7af);
-  --accent-foreground: light-dark(#fffdf8, #0d0c0c);
+  --accent: light-dark(#8f4a45, #c4746e);
+  --accent-hover: light-dark(#713a37, #d38a82);
+  --accent-text: light-dark(#793f3b, #d39a93);
+  --accent-foreground: light-dark(#fffaf3, #171313);
   --accent-subtle: light-dark(
-    color-mix(in oklab, #5b6a63 12%, transparent),
-    color-mix(in oklab, #9aa9a2 10%, transparent)
+    color-mix(in oklab, #8f4a45 12%, transparent),
+    color-mix(in oklab, #c4746e 13%, transparent)
   );
 
   --contrib-0: light-dark(#e6e1d7, #1c1b19);
   --contrib-1: light-dark(#d4d1c8, #323330);
   --contrib-2: light-dark(#b8b8ae, #50544d);
-  --contrib-3: light-dark(#8f9a91, #747d74);
-  --contrib-4: light-dark(#5b6a63, #a7b7af);
+  --contrib-3: light-dark(#a47a73, #8e5b56);
+  --contrib-4: light-dark(#8f4a45, #c4746e);
 }
 
 :root[data-theme="light"] {
@@ -109,12 +109,45 @@ a {
 }
 
 .background-field {
-  opacity: 0.58;
+  opacity: 0.84;
+}
+
+.background-field::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--border) 42%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--border) 42%, transparent) 1px, transparent 1px);
+  background-size: 72px 72px;
+  opacity: 0.28;
+  mask-image: radial-gradient(ellipse 70% 58% at 50% 18%, black 0%, transparent 78%);
 }
 
 :root[data-theme="light"] .background-field {
-  opacity: 0.12;
+  opacity: 0.16;
   mix-blend-mode: multiply;
+}
+
+:root[data-theme="light"] .background-field::before {
+  opacity: 0.1;
+}
+
+.hero-surface {
+  background:
+    linear-gradient(105deg, color-mix(in srgb, var(--accent) 6%, transparent), transparent 42%),
+    color-mix(in srgb, var(--surface) 28%, transparent);
+}
+
+.hero-surface::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5rem;
+  height: 1px;
+  background: var(--accent);
+  box-shadow: 5.5rem 0 var(--border-strong), 6.2rem 0 var(--border);
 }
 
 @theme inline {

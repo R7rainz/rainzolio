@@ -60,8 +60,9 @@ void main() {
 
   float vignette = 1.0 - smoothstep(0.35, 1.55, length(uv));
   vec3 dragonStone = vec3(0.56, 0.64, 0.61);
-  vec3 colour = dragonStone * (lines * 0.035 + nodes * 0.018) * vignette;
-  gl_FragColor = vec4(colour, (lines * 0.12 + nodes * 0.018) * vignette);
+  vec3 dragonRed = vec3(0.77, 0.45, 0.42);
+  vec3 colour = (dragonStone * lines * 0.08 + dragonRed * nodes * 0.035) * vignette;
+  gl_FragColor = vec4(colour, (lines * 0.2 + nodes * 0.035) * vignette);
 }
 `;
 
