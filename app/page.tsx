@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { BackgroundField } from "@/components/BackgroundField";
 import { GithubActivity } from "@/components/GithubActivity";
 import { Projects } from "@/components/Projects";
 import { Resume } from "@/components/Resume";
@@ -12,20 +11,18 @@ const { name, about, stack, links } = profile;
 
 export default function Home() {
   return (
-    <>
-      <BackgroundField />
-      <div className="relative z-10 mx-auto w-full max-w-3xl px-6 sm:px-8">
-        <header className="flex items-center justify-between py-8">
+    <div className="mx-auto w-full max-w-3xl px-6 sm:px-8">
+      <header className="flex items-center justify-between py-8">
         <span className="font-mono text-sm tracking-tight">
           <span className="text-accent">~/</span>
           <span className="text-heading">{name.handle}</span>
         </span>
         <ThemeToggle />
-        </header>
+      </header>
 
       <main>
         {/* Hero */}
-        <section className="hero-surface relative isolate my-2 overflow-hidden border-y border-border px-1 py-10 sm:py-12">
+        <section className="py-10">
           <div className="flex items-center gap-4">
             <Image
               src={name.avatar}
@@ -103,8 +100,8 @@ export default function Home() {
           </dl>
         </section>
 
-        <Projects />
         <Timeline />
+        <Projects />
         <GithubActivity />
         <TypingStats />
         <Resume />
@@ -114,7 +111,6 @@ export default function Home() {
         <span>{name.location}</span>
         <span>built by rainz</span>
       </footer>
-      </div>
-    </>
+    </div>
   );
 }
