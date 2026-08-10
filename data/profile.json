@@ -111,24 +111,6 @@
       "featured": true
     },
     {
-      "name": "Switchyard",
-      "blurb": "AI-assisted workflow automation for engineering teams. Natural-language drafts become editable visual graphs, then a deterministic Go engine runs them with retries, idempotency, live logs, signed webhooks, and workspace-scoped secrets.",
-      "role": "Architecture, workflow engine, API, and builder",
-      "stack": [
-        "Go",
-        "Next.js",
-        "TypeScript",
-        "Postgres",
-        "React Flow",
-        "WebSockets",
-        "OpenRouter"
-      ],
-      "repo": "https://github.com/R7rainz/switchyard",
-      "demo": "https://switchyard-alpha.vercel.app",
-      "showcase": null,
-      "featured": true
-    },
-    {
       "name": "GitHub Banners",
       "blurb": "A Go service that renders live SVG banners of GitHub stats. Multi-token rotation for rate limits, layered in-memory and Postgres caching with soft/hard TTLs, Kafka between services, and HMAC-signed internal calls.",
       "role": "Backend, with hurtki",
