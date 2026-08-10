@@ -59,6 +59,23 @@
   ],
   "projects": [
     {
+      "name": "Switchyard",
+      "blurb": "AI-powered workflow automation for engineering teams. Describe a workflow in natural language, edit the generated graph, then execute it deterministically with visible logs, retries, and live WebSocket events.",
+      "role": "Workflow engine, Go API, and visual builder",
+      "stack": [
+        "Go",
+        "Next.js",
+        "React Flow",
+        "Postgres",
+        "WebSockets",
+        "OpenAI"
+      ],
+      "repo": "https://github.com/R7rainz/switchyard",
+      "demo": null,
+      "showcase": "switchyard",
+      "featured": true
+    },
+    {
       "name": "PulseOps",
       "blurb": "Self-hostable uptime and latency monitoring. HTTP and heartbeat checks, incidents, SLA analytics, a web dashboard, a read-only API, and a terminal TUI — the whole stack comes up with one docker compose.",
       "role": "Ping engine, queues, and API",

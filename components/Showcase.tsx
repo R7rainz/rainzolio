@@ -6,6 +6,7 @@ import { Dotfiles } from "@/components/showcases/Dotfiles";
 import { Mail } from "@/components/showcases/Mail";
 import { Pulse } from "@/components/showcases/Pulse";
 import { Sync } from "@/components/showcases/Sync";
+import { Switchyard } from "@/components/showcases/Switchyard";
 
 /**
  * Backend projects have no interface to screenshot, so each gets a small
@@ -21,6 +22,7 @@ const REGISTRY: Record<string, ComponentType<ShowcaseProps>> = {
   sync: Sync as ComponentType<ShowcaseProps>,
   dotfiles: Dotfiles as ComponentType<ShowcaseProps>,
   banners: Banners,
+  switchyard: Switchyard,
 };
 
 export function Showcase({
