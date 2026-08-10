@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-/* Tailwind's `dark:` escape hatch, kept in sync with the token system below:
-   follow the OS unless [data-theme] on <html> overrides it. */
 @custom-variant dark {
   @media (prefers-color-scheme: dark) {
     &:where(:root:not([data-theme="light"]), :root:not([data-theme="light"]) *) {
@@ -13,60 +11,65 @@
   }
 }
 
-/*
- * Palette — Solarized Osaka, both ways.
- * light: Solarized Light — base3 paper, base01 ink, solarized red accent
- * dark:  Solarized Osaka — deep teal base, solarized ink ladder, gruvbox red accent
- *
- * Both halves share the solarized ink ladder, so the two themes read as one
- * identity rather than two designs.
- *
- * light-dark() resolves against `color-scheme`, so every token is one line and
- * <html data-theme="dark|light"> is all a toggle needs to touch.
- */
+/* OLED Kanagawa Dragon by default; the toggle swaps to a lighter-dark
+   Catppuccin Macchiato surface with Dragon red and Catppuccin rose accents. */
 :root {
   color-scheme: light dark;
 
-  --background: light-dark(#fdf6e3, #001b24);
-  --surface: light-dark(#eee8d5, #002b36);
-  --surface-raised: light-dark(#fffdf6, #073642);
+  --background: light-dark(#f4f1e9, #0d0c0c);
+  --surface: light-dark(#fffdf8, #131312);
+  --surface-raised: light-dark(#ece9e1, #1a1917);
 
-  --border: light-dark(#e3dcc4, #0d3f4b);
-  --border-strong: light-dark(#cfc7ab, #14505e);
+  --border: light-dark(#dfd9ce, #292827);
+  --border-strong: light-dark(#bdb6aa, #474542);
 
-  /* Solarized's ink ladder. The light side is shifted one step darker than the
-     canonical scheme: base1/base0 only reach 2.5:1 and 2.9:1 on base3, so the
-     usual body colours would fail AA. Ends at base00, which still clears 4.1:1
-     for de-emphasised text. */
-  --heading: light-dark(#073642, #eee8d5);
-  --foreground: light-dark(#495f66, #93a1a1);
-  --foreground-muted: light-dark(#586e75, #839496);
-  --foreground-subtle: light-dark(#657b83, #657b83);
+  --heading: light-dark(#2a2927, #c5c9c5);
+  --foreground: light-dark(#595853, #b5b3ad);
+  --foreground-muted: light-dark(#6c6a64, #9a9a91);
+  --foreground-subtle: light-dark(#87847b, #777870);
 
-  --accent: light-dark(#dc322f, #fb4934);
-  --accent-hover: light-dark(#cb4b16, #ff6b5a);
-  /* Solarized red lands at 4.27:1 on base3 — just shy of AA — so text/links
-     take a darkened red. On the dark base #fb4934 already clears 5.1:1. */
-  --accent-text: light-dark(#b52823, #fb4934);
-  /* Ink on an --accent fill. White clears 4.6:1 on solarized red but only
-     3.4:1 on gruvbox red, where the deep base wins at 5.1:1 — hence the flip. */
-  --accent-foreground: light-dark(#ffffff, #001b24);
+  --accent: light-dark(#8f4a45, #c4746e);
+  --accent-hover: light-dark(#713a37, #d38a82);
+  --accent-text: light-dark(#793f3b, #d39a93);
+  --accent-foreground: light-dark(#fffaf3, #171313);
   --accent-subtle: light-dark(
-    color-mix(in oklab, #dc322f 11%, transparent),
-    color-mix(in oklab, #fb4934 14%, transparent)
+    color-mix(in oklab, #8f4a45 12%, transparent),
+    color-mix(in oklab, #c4746e 13%, transparent)
   );
 
-  /* Contribution calendar: an empty step plus four ramping toward the accent,
-     so the graph belongs to the palette instead of importing GitHub's green. */
-  --contrib-0: light-dark(#ebe4cd, #04303c);
-  --contrib-1: light-dark(#f2c8b4, #5c1f18);
-  --contrib-2: light-dark(#e89478, #932c20);
-  --contrib-3: light-dark(#dc5f45, #c93a28);
-  --contrib-4: light-dark(#b52823, #fb4934);
+  --contrib-0: light-dark(#e6e1d7, #1c1b19);
+  --contrib-1: light-dark(#d4d1c8, #323330);
+  --contrib-2: light-dark(#b8b8ae, #50544d);
+  --contrib-3: light-dark(#a47a73, #8e5b56);
+  --contrib-4: light-dark(#8f4a45, #c4746e);
 }
 
 :root[data-theme="light"] {
-  color-scheme: light;
+  color-scheme: dark;
+
+  --background: #1e1e2e;
+  --surface: #232334;
+  --surface-raised: #313244;
+
+  --border: #38384d;
+  --border-strong: #585873;
+
+  --heading: #cad3f5;
+  --foreground: #b8c0e0;
+  --foreground-muted: #a5adcb;
+  --foreground-subtle: #939ab7;
+
+  --accent: #c4746e;
+  --accent-hover: #ea999c;
+  --accent-text: #f2a6a0;
+  --accent-foreground: #1e2030;
+  --accent-subtle: color-mix(in oklab, #c4746e 16%, transparent);
+
+  --contrib-0: #232334;
+  --contrib-1: #38384d;
+  --contrib-2: #585873;
+  --contrib-3: #a5adcb;
+  --contrib-4: #c4746e;
 }
 
 :root[data-theme="dark"] {
@@ -77,38 +80,37 @@
   --color-background: var(--background);
   --color-surface: var(--surface);
   --color-surface-raised: var(--surface-raised);
-
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
-
   --color-heading: var(--heading);
   --color-foreground: var(--foreground);
   --color-foreground-muted: var(--foreground-muted);
   --color-foreground-subtle: var(--foreground-subtle);
-
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
   --color-accent-text: var(--accent-text);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent-subtle: var(--accent-subtle);
-
   --font-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+  --ease-calm: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html {
+  background: var(--background);
+  scroll-behavior: smooth;
+  scroll-padding-top: 4rem;
+}
+
+html,
+body {
+  overflow-x: clip;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
-}
-
-/* Project cards scale slightly on hover and can bleed past the column on narrow
-   screens; that's intentional, so clip the page axis rather than let it raise a
-   horizontal scrollbar. `clip` not `hidden` — hidden still makes the root a
-   scroll container that pans programmatically. */
-html,
-body {
-  overflow-x: clip;
 }
 
 ::selection {
@@ -121,14 +123,20 @@ body {
   outline-offset: 2px;
 }
 
-/* Calm, fluid defaults: a soft ease-out that never snaps. */
+button,
+a {
+  transition:
+    color 400ms var(--ease-calm),
+    background-color 400ms var(--ease-calm),
+    border-color 400ms var(--ease-calm),
+    opacity 400ms var(--ease-calm),
+    transform 400ms var(--ease-calm);
+}
+
 @theme inline {
   --ease-calm: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-
-/* Contribution cells settling in, column by column. One-shot: a looping
-   background animation behind 367 cells would be noise, not delight. */
 @keyframes contrib-in {
   from {
     opacity: 0;
@@ -140,16 +148,12 @@ body {
   }
 }
 
-/* SVG rects scale from their top-left corner by default, which makes the grid
-   crawl. fill-box + centre keeps each cell popping in place. */
 .contrib-cell {
   transform-box: fill-box;
   transform-origin: center;
-  animation: contrib-in 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: contrib-in 420ms var(--ease-calm) both;
 }
 
-/* Bars grow via scaleX rather than width: the target width is an inline
-   percentage the keyframes can't see, and transforms don't trigger layout. */
 @keyframes bar-grow {
   from {
     transform: scaleX(0);
@@ -161,10 +165,9 @@ body {
 
 .wpm-bar {
   transform-origin: left;
-  animation: bar-grow 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: bar-grow 900ms var(--ease-calm) both;
 }
 
-/* The monkey at the keyboard: hands alternate, head bobs, eyes blink. */
 @keyframes tap-down {
   0%,
   100% {
@@ -196,26 +199,16 @@ body {
   }
 }
 
-button,
-a {
-  transition:
-    color 400ms var(--ease-calm),
-    background-color 400ms var(--ease-calm),
-    border-color 400ms var(--ease-calm),
-    opacity 400ms var(--ease-calm),
-    transform 400ms var(--ease-calm);
-}
-
-/* Theme toggle's circular wipe. The default cross-fade is suppressed so the
-   new theme is revealed purely by the clip-path animation the button drives. */
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
   mix-blend-mode: normal;
 }
+
 ::view-transition-old(root) {
   z-index: 1;
 }
+
 ::view-transition-new(root) {
   z-index: 2;
 }
@@ -229,7 +222,7 @@ a {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  /* Belt and braces — the toggle also checks this before starting a wipe. */
+
   ::view-transition-group(*),
   ::view-transition-old(*),
   ::view-transition-new(*) {

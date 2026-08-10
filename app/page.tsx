@@ -47,7 +47,7 @@ export default function Home() {
           </p>
 
           <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-2">
-            {[...links, { label: "Résumé", href: profile.resume }].map((l) => (
+            {[...links, { label: "Resume", href: profile.resume }].map((l) => (
               <a
                 key={l.label}
                 href={l.href}
