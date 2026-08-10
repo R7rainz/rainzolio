@@ -47,12 +47,12 @@
 :root[data-theme="light"] {
   color-scheme: dark;
 
-  --background: #24273a;
-  --surface: #2b2f44;
-  --surface-raised: #363a4f;
+  --background: #1e1e2e;
+  --surface: #232334;
+  --surface-raised: #313244;
 
-  --border: #3d4158;
-  --border-strong: #5b6078;
+  --border: #38384d;
+  --border-strong: #585873;
 
   --heading: #cad3f5;
   --foreground: #b8c0e0;
@@ -65,9 +65,9 @@
   --accent-foreground: #1e2030;
   --accent-subtle: color-mix(in oklab, #c4746e 16%, transparent);
 
-  --contrib-0: #2b2f44;
-  --contrib-1: #3d4158;
-  --contrib-2: #5b6078;
+  --contrib-0: #232334;
+  --contrib-1: #38384d;
+  --contrib-2: #585873;
   --contrib-3: #a5adcb;
   --contrib-4: #c4746e;
 }
@@ -97,6 +97,7 @@
 }
 
 html {
+  background: var(--background);
   scroll-behavior: smooth;
   scroll-padding-top: 4rem;
 }

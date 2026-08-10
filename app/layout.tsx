@@ -24,9 +24,8 @@ export const metadata: Metadata = {
     "Backend and systems portfolio for Ronak Kamboj: Go, Node.js, PostgreSQL, Redis, and Kafka.",
 };
 
-// Runs before first paint so a stored dark theme never flashes light.
-// Default to the OLED-friendly Dragon dark theme; the toggle is the only thing
-// that decides after that.
+// Runs before first paint so a stored theme never flashes the other palette.
+// Default to the OLED-friendly Dragon dark theme.
 const BOOT_THEME = `
 try {
   var t = localStorage.getItem('rainz-theme');
@@ -46,6 +45,7 @@ export default function RootLayout({
       lang="en"
       data-theme="dark"
       suppressHydrationWarning
+      style={{ backgroundColor: "#0d0c0c" }}
       className={`${sans.variable} ${mono.variable} h-full antialiased`}
     >
       <head>
