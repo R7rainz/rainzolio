@@ -19,9 +19,9 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ronak Kamboj — Backend & Systems",
+  title: "Ronak Kamboj — Full-stack Intern at InboxKit",
   description:
-    "Backend and systems portfolio for Ronak Kamboj: Go, Node.js, PostgreSQL, Redis, and Kafka.",
+    "Full-stack intern at InboxKit and Computer Science student at VIT Bhopal, building with Go, Node.js, PostgreSQL, Redis, and Kafka.",
 };
 
 // Runs before first paint so a stored theme never flashes the other palette.
