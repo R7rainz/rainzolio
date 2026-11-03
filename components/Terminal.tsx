@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type Dispatch, type SetStateAction } from "react";
+import { Window } from "@/components/Window";
 import profile from "@/data/profile.json";
 import { setTheme } from "@/lib/useTheme";
 
@@ -132,18 +133,11 @@ export function Terminal() {
   );
 
   return (
-    <div
-      className="card mx-auto w-full max-w-4xl cursor-text overflow-hidden text-left transition-shadow duration-300 focus-within:shadow-[0_0_0_1px_var(--accent),0_24px_48px_-28px_rgb(0_0_0/0.3)]"
+    <Window
+      title="rainz@arch: ~"
+      className="mx-auto w-full max-w-4xl cursor-text transition-shadow duration-300 focus-within:shadow-[0_0_0_1px_var(--accent),0_24px_48px_-28px_rgb(0_0_0/0.3)]"
       onClick={() => input.current?.focus()}
     >
-      <div className="flex items-center gap-2 border-b border-border px-4 py-3">
-        {/* macOS window controls: literal colours, not theme tokens. */}
-        <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
-        <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
-        <span className="h-3 w-3 rounded-full bg-[#28c840]" />
-        <span className="flex-1 text-center font-mono text-xs text-foreground-subtle">rainz@arch: ~</span>
-        <span className="w-12" />
-      </div>
 
       <div
         ref={body}
@@ -182,6 +176,6 @@ export function Terminal() {
         spellCheck={false}
         className="sr-only"
       />
-    </div>
+    </Window>
   );
 }
