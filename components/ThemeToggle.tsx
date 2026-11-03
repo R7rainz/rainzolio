@@ -18,7 +18,12 @@ export function ThemeToggle() {
       return;
     }
 
+    // Tag the transition so globals.css only disables the root crossfade for
+    // this wipe, not for other view transitions (the project-card morph).
+    const root = document.documentElement;
+    root.dataset.vt = "theme";
     const t = document.startViewTransition(() => setTheme(next));
+    t.finished.finally(() => delete root.dataset.vt);
     t.ready.then(() => {
       const r = btn.current?.getBoundingClientRect();
       if (!r) return;
@@ -45,7 +50,7 @@ export function ThemeToggle() {
       onClick={toggle}
       aria-label={`Switch to ${dark ? "light" : "dark"} theme`}
       title={`Switch to ${dark ? "light" : "dark"} theme`}
-      className="group relative grid h-9 w-9 place-items-center rounded-full border border-border text-foreground-muted transition-colors duration-500 hover:border-border-strong hover:text-accent-text"
+      className="relative grid h-9 w-9 place-items-center rounded-full text-foreground-muted transition-colors duration-300 hover:text-accent-text"
     >
       <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" aria-hidden>
         {/* One circle morphs between sun and moon: the mask slides in to bite a

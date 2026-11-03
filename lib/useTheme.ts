@@ -18,11 +18,15 @@ function subscribe(onChange: () => void) {
 }
 
 function getSnapshot(): Theme {
-  return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+  const t = document.documentElement.dataset.theme;
+  // No data-theme only happens when storage threw in the boot script; the CSS is
+  // following the system then, so the toggle should too.
+  if (t === "dark" || t === "light") return t;
+  return matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
-// SSR renders dark; the boot script fixes a stored light preference before
-// first paint.
+// The server can't know the theme; the page itself is themed by CSS before
+// paint, and only the toggle icon reconciles after hydration.
 function getServerSnapshot(): Theme {
   return "dark";
 }

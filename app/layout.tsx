@@ -1,38 +1,40 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import { Google_Sans, Google_Sans_Code } from "next/font/google";
 import "./globals.css";
 
-// Space Grotesk: geometric with odd, characterful details — reads as designed
-// rather than default. JetBrains Mono: the terminal half of the identity.
+// Google Sans for everything readable: geometric, calm, and it tracks tight at
+// display sizes. Google Sans Code for labels, stats, and diagrams.
 // Names deliberately differ from Tailwind's --font-sans / --font-mono theme
 // keys; reusing those would make the @theme mapping reference itself.
-const sans = Space_Grotesk({
-  variable: "--font-space-grotesk",
+const sans = Google_Sans({
+  variable: "--font-google-sans",
   subsets: ["latin"],
   display: "swap",
 });
 
-const mono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
+const mono = Google_Sans_Code({
+  variable: "--font-google-sans-code",
   subsets: ["latin"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Ronak Kamboj — Full-stack Intern at InboxKit",
+  title: "Ronak Kamboj — Full-stack Developer",
   description:
-    "Full-stack intern at InboxKit, building with Go, Node.js, PostgreSQL, Redis, and Kafka.",
+    "Full-stack developer building with React, Next.js, Go, Node.js, PostgreSQL, Redis, and Kafka. Currently a full-stack intern at InboxKit.",
 };
 
-// Runs before first paint so a stored theme never flashes the other palette.
-// Default to the OLED-friendly Dragon dark theme.
+// Runs before first paint so a stored theme never flashes the other palette,
+// and so scroll reveals start hidden instead of popping out of view.
+// No stored choice: follow the system. If storage throws, no data-theme is set
+// and the CSS falls back to the system preference on its own.
 const BOOT_THEME = `
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('reveal-on');
 try {
   var t = localStorage.getItem('rainz-theme');
-  document.documentElement.dataset.theme = t === 'light' ? 'light' : 'dark';
-} catch (e) {
-  document.documentElement.dataset.theme = 'dark';
-}
+  if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  document.documentElement.dataset.theme = t;
+} catch (e) {}
 `;
 
 export default function RootLayout({
@@ -43,9 +45,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      data-theme="dark"
       suppressHydrationWarning
-      style={{ backgroundColor: "#0d0c0c" }}
       className={`${sans.variable} ${mono.variable} h-full antialiased`}
     >
       <head>

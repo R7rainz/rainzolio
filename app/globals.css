@@ -1,75 +1,50 @@
 @import "tailwindcss";
 
-@custom-variant dark {
-  @media (prefers-color-scheme: dark) {
-    &:where(:root:not([data-theme="light"]), :root:not([data-theme="light"]) *) {
-      @slot;
-    }
-  }
-  &:where([data-theme="dark"], [data-theme="dark"] *) {
-    @slot;
-  }
-}
-
-/* OLED Kanagawa Dragon by default; the toggle swaps to a lighter-dark
-   Catppuccin Macchiato surface with Dragon red and Catppuccin rose accents. */
+/* Cool grey paper and near-black ink in the light, graphite in the dark. One
+   blue accent (shared by the favicon); the hero wave runs blue to warm.
+   light-dark() follows the system until the toggle pins a theme via
+   [data-theme] below. */
 :root {
   color-scheme: light dark;
 
-  --background: light-dark(#f4f1e9, #0d0c0c);
-  --surface: light-dark(#fffdf8, #131312);
-  --surface-raised: light-dark(#ece9e1, #1a1917);
+  --background: light-dark(#f0f1f3, #0b0c0e);
+  --surface: light-dark(#ffffff, #141518);
 
-  --border: light-dark(#dfd9ce, #292827);
-  --border-strong: light-dark(#bdb6aa, #474542);
+  --border: light-dark(#e0e2e6, #23252a);
+  --border-strong: light-dark(#c4c7cd, #3b3e46);
+  --grid: light-dark(#d6d9de, #1d1f23);
 
-  --heading: light-dark(#2a2927, #c5c9c5);
-  --foreground: light-dark(#595853, #b5b3ad);
-  --foreground-muted: light-dark(#6c6a64, #9a9a91);
-  --foreground-subtle: light-dark(#87847b, #777870);
+  --heading: light-dark(#0b0b0c, #f2f3f5);
+  --foreground: light-dark(#34363b, #c7c9ce);
+  --foreground-muted: light-dark(#55585f, #a0a3ab);
+  --foreground-subtle: light-dark(#6a6d74, #878a93);
 
-  --accent: light-dark(#8f4a45, #c4746e);
-  --accent-hover: light-dark(#713a37, #d38a82);
-  --accent-text: light-dark(#793f3b, #d39a93);
-  --accent-foreground: light-dark(#fffaf3, #171313);
+  --accent: light-dark(#2f4fd8, #7b93ff);
+  --accent-text: light-dark(#2a44c0, #9aadff);
   --accent-subtle: light-dark(
-    color-mix(in oklab, #8f4a45 12%, transparent),
-    color-mix(in oklab, #c4746e 13%, transparent)
+    color-mix(in oklab, #2f4fd8 12%, transparent),
+    color-mix(in oklab, #7b93ff 16%, transparent)
   );
 
-  --contrib-0: light-dark(#e6e1d7, #1c1b19);
-  --contrib-1: light-dark(#d4d1c8, #323330);
-  --contrib-2: light-dark(#b8b8ae, #50544d);
-  --contrib-3: light-dark(#a47a73, #8e5b56);
-  --contrib-4: light-dark(#8f4a45, #c4746e);
+  /* Depth instead of outlines: a shade for shadows and a lip of light on
+     top edges, tuned per theme (shadows vanish on near-black otherwise). */
+  --shade: light-dark(rgb(16 24 40 / 0.1), rgb(0 0 0 / 0.55));
+  --shade-deep: light-dark(rgb(16 24 40 / 0.18), rgb(0 0 0 / 0.7));
+  --lip: light-dark(rgb(255 255 255 / 0.9), rgb(255 255 255 / 0.06));
+  --inset: light-dark(#eceef1, #101114);
+
+  --wave-a: light-dark(#4b62d8, #6f86ff);
+  --wave-b: light-dark(#e2774a, #ff9c6e);
+
+  --contrib-0: light-dark(#e2e4e8, #18191d);
+  --contrib-1: light-dark(#c9d2f3, #222a4d);
+  --contrib-2: light-dark(#9aaeee, #2f3f86);
+  --contrib-3: light-dark(#5f7de3, #4c63c9);
+  --contrib-4: light-dark(#2f4fd8, #7b93ff);
 }
 
 :root[data-theme="light"] {
-  color-scheme: dark;
-
-  --background: #1e1e2e;
-  --surface: #232334;
-  --surface-raised: #313244;
-
-  --border: #38384d;
-  --border-strong: #585873;
-
-  --heading: #cad3f5;
-  --foreground: #b8c0e0;
-  --foreground-muted: #a5adcb;
-  --foreground-subtle: #939ab7;
-
-  --accent: #c4746e;
-  --accent-hover: #ea999c;
-  --accent-text: #f2a6a0;
-  --accent-foreground: #1e2030;
-  --accent-subtle: color-mix(in oklab, #c4746e 16%, transparent);
-
-  --contrib-0: #232334;
-  --contrib-1: #38384d;
-  --contrib-2: #585873;
-  --contrib-3: #a5adcb;
-  --contrib-4: #c4746e;
+  color-scheme: light;
 }
 
 :root[data-theme="dark"] {
@@ -79,7 +54,6 @@
 @theme inline {
   --color-background: var(--background);
   --color-surface: var(--surface);
-  --color-surface-raised: var(--surface-raised);
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
   --color-heading: var(--heading);
@@ -87,30 +61,26 @@
   --color-foreground-muted: var(--foreground-muted);
   --color-foreground-subtle: var(--foreground-subtle);
   --color-accent: var(--accent);
-  --color-accent-hover: var(--accent-hover);
   --color-accent-text: var(--accent-text);
-  --color-accent-foreground: var(--accent-foreground);
   --color-accent-subtle: var(--accent-subtle);
-  --font-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
-  --ease-calm: cubic-bezier(0.22, 1, 0.36, 1);
+  --font-sans: var(--font-google-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-google-sans-code), ui-monospace, monospace;
 }
 
 html {
   background: var(--background);
   scroll-behavior: smooth;
-  scroll-padding-top: 4rem;
+  scroll-padding-top: 5rem;
 }
 
-html,
+/* No body background: the rain canvas sits between the html background and
+   the content, and an opaque body would hide it. */
 body {
-  overflow-x: clip;
-}
-
-body {
-  background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  overflow-x: clip;
 }
 
 ::selection {
@@ -120,41 +90,194 @@ body {
 
 :focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 2px;
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
-button,
-a {
-  transition:
-    color 400ms var(--ease-calm),
-    background-color 400ms var(--ease-calm),
-    border-color 400ms var(--ease-calm),
-    opacity 400ms var(--ease-calm),
-    transform 400ms var(--ease-calm);
+@layer components {
+  /* The one link style: a quiet rule under the text that turns blue on hover. */
+  .link {
+    text-decoration-line: underline;
+    text-decoration-color: var(--border-strong);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    transition:
+      color 300ms ease,
+      text-decoration-color 300ms ease;
+  }
+  .link:hover {
+    color: var(--accent-text);
+    text-decoration-color: var(--accent);
+  }
+
+  /* Floating chrome: the nav, the theme toggle, secondary buttons. */
+  .pill {
+    border-radius: 9999px;
+    background: color-mix(in oklab, var(--surface) 85%, transparent);
+    backdrop-filter: blur(12px);
+    box-shadow:
+      inset 0 1px 0 var(--lip),
+      0 1px 2px var(--shade),
+      0 8px 24px -10px var(--shade-deep);
+  }
+
+  /* The white card everything sits on. */
+  .card {
+    border-radius: 1.75rem;
+    background: var(--surface);
+    box-shadow:
+      inset 0 1px 0 var(--lip),
+      0 1px 2px var(--shade),
+      0 12px 32px -16px var(--shade),
+      0 40px 80px -40px var(--shade-deep);
+  }
+
+  /* A recessed panel inside a card: the stage diagrams sit on. */
+  .well {
+    border-radius: 1.25rem;
+    background: var(--inset);
+    box-shadow:
+      inset 0 2px 6px var(--shade),
+      inset 0 -1px 0 var(--lip);
+  }
+
+  /* Giant striped name at the foot of the page; the stripes drift slowly. */
+  .wordmark {
+    color: transparent;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      var(--border-strong) 0 1.5px,
+      transparent 1.5px 5px
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: stripes 6s linear infinite;
+  }
+
+  /* Project cards: no outline, all depth. They tilt toward the pointer in
+     3D, lift, and the diagram layer floats toward you (preserve-3d, so no
+     overflow clipping on the card itself). ProjectCard.tsx feeds the pointer
+     in as --mx/--my/--rx/--ry. */
+  .project-card {
+    transform-style: preserve-3d;
+    transform: perspective(1200px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition:
+      transform 600ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 600ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .project-card:hover {
+    transform: perspective(1200px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-10px);
+    box-shadow:
+      inset 0 1px 0 var(--lip),
+      0 2px 4px var(--shade),
+      0 24px 48px -20px var(--shade-deep),
+      0 64px 120px -48px var(--shade-deep);
+  }
+  .project-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 50%), var(--accent-subtle), transparent 55%);
+    opacity: 0;
+    transition: opacity 500ms ease;
+    pointer-events: none;
+  }
+  .project-card:hover::before {
+    opacity: 1;
+  }
+  .project-card .layer {
+    transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .project-card:hover .layer-1 {
+    transform: translateZ(28px);
+  }
+  .project-card:hover .layer-2 {
+    transform: translateZ(48px);
+  }
+  /* Actions arrive one after another. */
+  .project-card .action {
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+      opacity 400ms ease,
+      transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .project-card:is(:hover, :focus-within) .action {
+    opacity: 1;
+    transform: none;
+  }
+  .project-card .action:nth-child(2) {
+    transition-delay: 60ms;
+  }
+  .project-card .action:nth-child(3) {
+    transition-delay: 120ms;
+  }
+  @media (pointer: coarse) {
+    .project-card .action {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* The workflow pop-up. Where view transitions run, the card morphs into it
+     instead (ProjectCard adds .vt); this pop is the fallback. */
+  .project-dialog[open]:not(.vt) {
+    animation: pop 380ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .project-dialog[open]::backdrop {
+    animation: fade 300ms ease;
+  }
+
+  /* Engineering paper behind the diagrams. */
+  .dot-grid {
+    background-image: radial-gradient(var(--grid) 1px, transparent 1px);
+    background-size: 14px 14px;
+    background-position: 7px 7px;
+  }
 }
 
-@theme inline {
-  --ease-calm: cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-@keyframes contrib-in {
+/* Motion. The hero rises on load; scroll motion is below. */
+@keyframes rise {
   from {
     opacity: 0;
-    transform: scale(0.4);
+    transform: translateY(14px);
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+  }
+}
+
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes draw {
+  from {
+    stroke-dashoffset: 1;
   }
   to {
-    opacity: 1;
-    transform: scale(1);
+    stroke-dashoffset: 0;
   }
 }
 
-.contrib-cell {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: contrib-in 420ms var(--ease-calm) both;
+@keyframes stripes {
+  to {
+    background-position: 0 50px;
+  }
 }
 
-@keyframes bar-grow {
+@keyframes grow-x {
   from {
     transform: scaleX(0);
   }
@@ -163,54 +286,159 @@ a {
   }
 }
 
-.wpm-bar {
-  transform-origin: left;
-  animation: bar-grow 900ms var(--ease-calm) both;
+.rise {
+  animation: rise 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@keyframes tap-down {
-  0%,
-  100% {
-    transform: translateY(-1.6px);
+/* The celebration: up, a half-turn at the top, and a hard landing. */
+@keyframes siu {
+  0% {
+    transform: translateY(0);
   }
-  50% {
-    transform: translateY(0.8px);
+  35% {
+    transform: translateY(-14px) rotateY(180deg);
   }
-}
-
-@keyframes bob {
-  0%,
+  60% {
+    transform: translateY(-4px) rotateY(360deg);
+  }
+  72% {
+    transform: translateY(2px) scale(1.25, 0.8);
+  }
   100% {
     transform: translateY(0);
   }
-  50% {
-    transform: translateY(0.7px);
-  }
 }
 
-@keyframes monkey-blink {
-  0%,
-  92%,
-  100% {
-    transform: scaleY(1);
-  }
-  96% {
-    transform: scaleY(0.1);
-  }
+.siu {
+  animation: siu 750ms cubic-bezier(0.3, 0.7, 0.4, 1) both;
 }
 
-::view-transition-old(root),
-::view-transition-new(root) {
+
+/* Scroll motion, driven by ScrollFx.tsx so it works in every browser:
+   - .reveal / .fig / .bar get .in when they scroll into view (staggered);
+   - --hero (0..1 across the first screen) and --scroll (0..1 down the page)
+     are written on <html> as you scroll.
+   Nothing is hidden unless the boot script tagged the page .reveal-on, so
+   no-JS and reduced-motion visitors simply get the finished page. */
+.reveal-on .reveal {
+  transition:
+    opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1000ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 900ms ease;
+}
+.reveal-on .reveal:not(.in) {
+  opacity: 0;
+  transform: translateY(48px) scale(0.97);
+  filter: blur(6px);
+}
+
+/* Diagrams assemble as they arrive: boxes fade up, then the wires draw. */
+.reveal-on .fig .node {
+  transition: opacity 600ms ease 150ms;
+}
+.reveal-on .fig:not(.in) .node {
+  opacity: 0;
+}
+.reveal-on .fig .edge {
+  stroke-dasharray: 1;
+  transition: stroke-dashoffset 900ms cubic-bezier(0.22, 1, 0.36, 1) 450ms;
+}
+.reveal-on .fig:not(.in) .edge {
+  stroke-dashoffset: 1;
+}
+.reveal-on .fig .tip {
+  transition: opacity 400ms ease 1100ms;
+}
+.reveal-on .fig:not(.in) .tip {
+  opacity: 0;
+}
+
+.reveal-on .bar {
+  transform-origin: left;
+  transition: transform 1200ms cubic-bezier(0.22, 1, 0.36, 1) 200ms;
+}
+.reveal-on .bar:not(.in) {
+  transform: scaleX(0);
+}
+
+/* The hero eases up and out as you leave it. */
+.hero-copy {
+  transform: translateY(calc(var(--hero, 0) * -90px)) scale(calc(1 - var(--hero, 0) * 0.04));
+  opacity: calc(1 - var(--hero, 0) * 0.85);
+}
+
+/* Reading progress along the top edge. */
+.progress {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 50;
+  height: 2px;
+  background: var(--accent);
+  transform-origin: left;
+  transform: scaleX(var(--scroll, 0));
+}
+
+/* View transitions. ThemeToggle.tsx tags the page data-vt="theme" for its
+   circular wipe (it animates the new root itself); ProjectCard.tsx tags it
+   "project" while a card morphs into its pop-up and back. */
+html[data-vt="theme"]::view-transition-old(root),
+html[data-vt="theme"]::view-transition-new(root) {
   animation: none;
   mix-blend-mode: normal;
 }
 
-::view-transition-old(root) {
+html[data-vt="theme"]::view-transition-old(root) {
   z-index: 1;
 }
 
-::view-transition-new(root) {
+html[data-vt="theme"]::view-transition-new(root) {
   z-index: 2;
+}
+
+html[data-vt="project"]::view-transition-old(root),
+html[data-vt="project"]::view-transition-new(root) {
+  animation-duration: 420ms;
+}
+
+::view-transition-group(project-morph) {
+  animation-duration: 560ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Card and pop-up differ in shape; crop rather than stretch while morphing. */
+::view-transition-old(project-morph),
+::view-transition-new(project-morph) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  animation-duration: 560ms;
+}
+
+/* Scrollbars behave like macOS overlay ones: invisible until something
+   scrolls, then gone again. AutoScrollbars.tsx toggles .is-scrolling. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.is-scrolling {
+  scrollbar-color: color-mix(in oklab, var(--foreground) 40%, transparent) transparent;
+}
+
+@supports not (scrollbar-color: auto) {
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background: transparent;
+  }
+  .is-scrolling::-webkit-scrollbar-thumb {
+    background: color-mix(in oklab, var(--foreground) 40%, transparent);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
