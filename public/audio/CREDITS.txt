@@ -1,0 +1,9 @@
+Music used in the SongSpot demo (re-encoded to 96 kbps AAC), all CC BY 4.0
+(https://creativecommons.org/licenses/by/4.0/):
+
+under-the-rain.m4a  "Under the Rain - Lofi" by migfus20
+                    https://opengameart.org/content/under-the-rain-lofi
+cold-and-rainy.m4a  "Cold & Rainy" by Purrple Cat
+                    https://opengameart.org/content/cold-rainy
+up-all-night.m4a    "Up All Night" by Purrple Cat
+                    https://opengameart.org/content/up-all-night-0
