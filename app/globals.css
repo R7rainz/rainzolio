@@ -33,9 +33,6 @@
   --lip: light-dark(rgb(255 255 255 / 0.9), rgb(255 255 255 / 0.06));
   --inset: light-dark(#eceef1, #101114);
 
-  /* The hero's lights: two metallic greys, silvery in the dark. */
-  --wave-a: light-dark(#8e949e, #b4b9c1);
-  --wave-b: light-dark(#a3a9b3, #d9dde3);
 
   --contrib-0: light-dark(#e2e4e8, #18191d);
   --contrib-1: light-dark(#c9d2f3, #222a4d);
