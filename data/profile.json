@@ -2,41 +2,53 @@
   "name": {
     "display": "Ronak Kamboj",
     "handle": "rainz",
-    "role": "Full-stack intern",
+    "role": "Full-stack developer",
     "place": "InboxKit",
+    "now": "Full-stack intern at InboxKit",
     "location": "Bhopal, Madhya Pradesh",
     "avatar": "/hero/rainz.jpg",
     "status": "Available for opportunities",
-    "tagline": "Full-stack intern at InboxKit. I build backend-heavy products — mostly Node and Go, with a bias toward background services, queues, and things that stay up."
+    "tagline": "I build products end to end: React and Next.js on the front, Go and Node services behind them, and the queues and databases that keep everything up."
   },
   "about": [
-    "I started with C/C++ and Codeforces, and still do a bit of DSA in C++. These days most of my time goes into backend work: designing services, modelling data, and making the parts talk to each other without falling over.",
-    "Recently that's meant Go for background services and Node/TypeScript for APIs — with Postgres, Redis, and Kafka doing the heavy lifting underneath."
+    "I'm a full-stack developer, currently interning at InboxKit, where I ship features across the stack for an email infrastructure platform used by outreach teams. I like owning a feature from the interface down: the UI, the API behind it, the data model, and the background jobs that keep it honest.",
+    "On the front end that means React and Next.js with TypeScript; behind it, Go for services and workers and Node for APIs, with PostgreSQL, Redis, and Kafka doing the heavy lifting. I started with C/C++ and Codeforces, and still do a bit of DSA in C++."
   ],
   "stack": {
     "Languages": [
-      "Go",
       "TypeScript",
+      "Go",
+      "JavaScript",
       "C++",
       "SQL"
+    ],
+    "Frontend": [
+      "React",
+      "Next.js",
+      "Tailwind CSS",
+      "React Flow"
     ],
     "Backend": [
       "Node.js",
       "Chi",
       "Express",
-      "Prisma",
-      "Goose"
+      "Fastify",
+      "WebSockets",
+      "SSE"
     ],
     "Data": [
       "PostgreSQL",
       "Redis",
       "Kafka",
-      "BullMQ"
+      "BullMQ",
+      "Prisma",
+      "Goose"
     ],
     "Ops": [
       "Docker",
       "Caddy",
       "Linux",
+      "GitHub Actions",
       "Neovim"
     ]
   },
@@ -76,8 +88,84 @@
       ],
       "repo": "https://github.com/R7rainz/switchyard",
       "demo": "https://switchyard-alpha.vercel.app",
-      "showcase": "switchyard",
-      "featured": true
+      "highlights": [
+        "Go workflow engine with asynchronous execution, retries, cancellation, idempotency keys, and recovery of interrupted runs.",
+        "Workspace RBAC, encrypted credential storage, signed webhooks, and SSRF protection.",
+        "Integrations with GitHub, Slack, Discord, SMTP, and multiple LLM providers."
+      ],
+      "diagram": {
+        "caption": "A prompt becomes a graph you can edit; the Go engine runs it, snapshots it, and streams events back.",
+        "nodes": [
+          {
+            "id": "prompt",
+            "label": "prompt",
+            "x": 50,
+            "y": 30
+          },
+          {
+            "id": "draft",
+            "label": "AI draft",
+            "x": 180,
+            "y": 30
+          },
+          {
+            "id": "graph",
+            "label": "graph editor",
+            "x": 310,
+            "y": 30
+          },
+          {
+            "id": "engine",
+            "label": "Go engine",
+            "x": 180,
+            "y": 140
+          },
+          {
+            "id": "pg",
+            "label": "postgres",
+            "x": 50,
+            "y": 140
+          },
+          {
+            "id": "run",
+            "label": "integrations",
+            "x": 310,
+            "y": 140
+          }
+        ],
+        "edges": [
+          [
+            "prompt",
+            "draft"
+          ],
+          [
+            "draft",
+            "graph",
+            "edit"
+          ],
+          [
+            "graph",
+            "engine",
+            "rest · ws"
+          ],
+          [
+            "engine",
+            "pg",
+            "snapshot"
+          ],
+          [
+            "engine",
+            "run"
+          ]
+        ],
+        "flow": [
+          "prompt",
+          "draft",
+          "graph",
+          "engine",
+          "run"
+        ]
+      }
     },
     {
       "name": "PulseOps",
@@ -94,8 +182,86 @@
       ],
       "repo": "https://github.com/R7rainz/pulseops",
       "demo": "https://youtu.be/x0MH8X3nnwk",
-      "showcase": "pulse",
-      "featured": true
+      "highlights": [
+        "Concurrent Go ping engine: a goroutine worker pool fed by Kafka, probing HTTP, TCP, DNS, and keyword checks.",
+        "Results are deduplicated in Redis and Kafka offsets commit only after they land, so at-least-once delivery never opens a phantom incident.",
+        "Webhook alerting with retries and exponential backoff on Redis and BullMQ."
+      ],
+      "diagram": {
+        "caption": "One scheduled check. The scheduler claims due monitors and publishes them; Go workers probe and publish results; the consumer dedups them before the incident state machine.",
+        "nodes": [
+          {
+            "id": "sched",
+            "label": "scheduler",
+            "x": 50,
+            "y": 30
+          },
+          {
+            "id": "kafka",
+            "label": "kafka",
+            "x": 180,
+            "y": 30
+          },
+          {
+            "id": "ping",
+            "label": "ping engine",
+            "x": 310,
+            "y": 30
+          },
+          {
+            "id": "consumer",
+            "label": "consumer",
+            "x": 310,
+            "y": 140
+          },
+          {
+            "id": "sm",
+            "label": "state machine",
+            "x": 180,
+            "y": 140
+          },
+          {
+            "id": "alerts",
+            "label": "alerts",
+            "x": 50,
+            "y": 140
+          }
+        ],
+        "edges": [
+          [
+            "sched",
+            "kafka",
+            "targets"
+          ],
+          [
+            "kafka",
+            "ping"
+          ],
+          [
+            "ping",
+            "consumer",
+            "metrics"
+          ],
+          [
+            "consumer",
+            "sm",
+            "dedup"
+          ],
+          [
+            "sm",
+            "alerts",
+            "incident"
+          ]
+        ],
+        "flow": [
+          "sched",
+          "kafka",
+          "ping",
+          "consumer",
+          "sm",
+          "alerts"
+        ]
+      }
     },
     {
       "name": "AuraMail",
@@ -111,25 +277,85 @@
       ],
       "repo": "https://github.com/R7rainz/AuraMail",
       "demo": "https://aura-mail-dun.vercel.app",
-      "showcase": "mail",
-      "featured": true
-    },
-    {
-      "name": "GitHub Banners",
-      "blurb": "A Go service that renders live SVG banners of GitHub stats. Multi-token rotation for rate limits, layered in-memory and Postgres caching with soft/hard TTLs, Kafka between services, and HMAC-signed internal calls.",
-      "role": "Backend, with hurtki",
-      "stack": [
-        "Go",
-        "Postgres",
-        "Kafka",
-        "Docker",
-        "HMAC"
+      "highlights": [
+        "Gmail sync over Google OAuth 2.0 with read-only access, running in the background and grouping related messages into threads.",
+        "GPT-4 Mini extracts company, role, deadline, salary, and eligibility from unstructured email.",
+        "Go backend streams processing updates over Server-Sent Events; the Postgres schema is managed with Goose migrations."
       ],
-      "repo": "https://github.com/hurtki/github-banners",
-      "demo": null,
-      "showcase": "banners",
-      "featured": true,
-      "backendOnly": true
+      "diagram": {
+        "caption": "Synced over OAuth, extracted by the model, stored in Postgres, and streamed to the inbox over SSE.",
+        "nodes": [
+          {
+            "id": "gmail",
+            "label": "gmail",
+            "x": 50,
+            "y": 30
+          },
+          {
+            "id": "sync",
+            "label": "Go sync",
+            "x": 180,
+            "y": 30
+          },
+          {
+            "id": "ai",
+            "label": "AI extract",
+            "x": 310,
+            "y": 30
+          },
+          {
+            "id": "pg",
+            "label": "postgres",
+            "x": 310,
+            "y": 140
+          },
+          {
+            "id": "inbox",
+            "label": "inbox",
+            "x": 180,
+            "y": 140
+          },
+          {
+            "id": "cal",
+            "label": "calendar",
+            "x": 50,
+            "y": 140
+          }
+        ],
+        "edges": [
+          [
+            "gmail",
+            "sync",
+            "oauth"
+          ],
+          [
+            "sync",
+            "ai"
+          ],
+          [
+            "ai",
+            "pg"
+          ],
+          [
+            "pg",
+            "inbox",
+            "sse"
+          ],
+          [
+            "inbox",
+            "cal",
+            "deadline"
+          ]
+        ],
+        "flow": [
+          "gmail",
+          "sync",
+          "ai",
+          "pg",
+          "inbox",
+          "cal"
+        ]
+      }
     },
     {
       "name": "SongSpot",
@@ -145,24 +371,182 @@
       ],
       "repo": "https://github.com/R7rainz/songspot",
       "demo": "https://songspot-pi.vercel.app",
-      "showcase": "sync",
-      "featured": true
+      "highlights": [
+        "Per-room hubs in Go, with Redis Pub/Sub fanning play, pause, and seek out to every socket in the room.",
+        "Playback state is an anchor (a position plus when it was recorded), not a ticking clock; each client works out where the song is now.",
+        "Clock-offset estimation over the socket, so listeners with skewed clocks or slow networks still land on the same second."
+      ],
+      "diagram": {
+        "caption": "One seek. The server stores an anchor (position plus when it was set) and fans it out; each client computes its own playhead from it.",
+        "nodes": [
+          {
+            "id": "you",
+            "label": "you",
+            "x": 50,
+            "y": 30
+          },
+          {
+            "id": "server",
+            "label": "Go server",
+            "x": 180,
+            "y": 30
+          },
+          {
+            "id": "redis",
+            "label": "redis",
+            "x": 310,
+            "y": 30
+          },
+          {
+            "id": "hub",
+            "label": "room hub",
+            "x": 310,
+            "y": 129
+          },
+          {
+            "id": "l1",
+            "label": "listener",
+            "x": 180,
+            "y": 108
+          },
+          {
+            "id": "l2",
+            "label": "listener",
+            "x": 180,
+            "y": 150
+          }
+        ],
+        "edges": [
+          [
+            "you",
+            "server",
+            "ws"
+          ],
+          [
+            "server",
+            "redis",
+            "anchor"
+          ],
+          [
+            "redis",
+            "hub",
+            "pub/sub"
+          ],
+          [
+            "hub",
+            "l1"
+          ],
+          [
+            "hub",
+            "l2"
+          ]
+        ],
+        "flow": [
+          "you",
+          "server",
+          "redis",
+          "hub",
+          "l1"
+        ]
+      }
     },
     {
-      "name": "Arch rice — dotfiles",
-      "blurb": "My Arch Linux setup: Hyprland on Wayland with a Quickshell bar (Noctalia), plus rofi, mako, fish, Neovim and yazi. Deployed with GNU Stow. Featured on It's FOSS as one of the top Hyprland configs for UI/UX.",
-      "role": "Config · 74 stars",
+      "name": "GitHub Banners",
+      "blurb": "A Go service that renders live SVG banners of GitHub stats. Multi-token rotation for rate limits, layered in-memory and Postgres caching with soft/hard TTLs, Kafka between services, and HMAC-signed internal calls.",
+      "role": "Backend, with hurtki",
       "stack": [
-        "Arch",
-        "Hyprland",
-        "Quickshell",
-        "QML",
-        "Neovim"
+        "Go",
+        "Postgres",
+        "Kafka",
+        "Docker",
+        "HMAC"
       ],
-      "repo": "https://github.com/R7rainz/dotfiles",
+      "repo": "https://github.com/hurtki/github-banners",
       "demo": null,
-      "showcase": "dotfiles",
-      "featured": true
+      "highlights": [
+        "Multi-token rotation keeps the service under GitHub's rate limits.",
+        "Two-layer cache, in-memory and Postgres, with a 10-minute soft TTL and a 24-hour hard TTL.",
+        "Services talk over Kafka, and internal calls are HMAC-signed."
+      ],
+      "diagram": {
+        "caption": "A banner request. Stats come from cache (in-memory, then Postgres) or from GitHub on a miss; rendering runs off a Kafka event and the SVG is served statically.",
+        "nodes": [
+          {
+            "id": "nginx",
+            "label": "nginx",
+            "x": 50,
+            "y": 30
+          },
+          {
+            "id": "api",
+            "label": "api",
+            "x": 180,
+            "y": 30
+          },
+          {
+            "id": "gh",
+            "label": "github api",
+            "x": 310,
+            "y": 30
+          },
+          {
+            "id": "kafka",
+            "label": "kafka",
+            "x": 310,
+            "y": 140
+          },
+          {
+            "id": "render",
+            "label": "renderer",
+            "x": 180,
+            "y": 140
+          },
+          {
+            "id": "store",
+            "label": "storage",
+            "x": 50,
+            "y": 140
+          }
+        ],
+        "edges": [
+          [
+            "nginx",
+            "api"
+          ],
+          [
+            "api",
+            "gh",
+            "on miss"
+          ],
+          [
+            "api",
+            "kafka",
+            "event"
+          ],
+          [
+            "kafka",
+            "render"
+          ],
+          [
+            "render",
+            "store",
+            "svg"
+          ],
+          [
+            "store",
+            "nginx",
+            "static"
+          ]
+        ],
+        "flow": [
+          "nginx",
+          "api",
+          "kafka",
+          "render",
+          "store",
+          "nginx"
+        ]
+      }
     },
     {
       "name": "TaskFlow",
@@ -177,10 +561,7 @@
         "TOTP"
       ],
       "repo": "https://github.com/R7rainz/TaskFlow",
-      "demo": null,
-      "showcase": null,
-      "featured": false,
-      "art": "token"
+      "demo": null
     },
     {
       "name": "BrainBox",
@@ -192,10 +573,7 @@
         "Firebase"
       ],
       "repo": "https://github.com/R7rainz/brainbox",
-      "demo": null,
-      "showcase": null,
-      "featured": false,
-      "art": "notes"
+      "demo": null
     },
     {
       "name": "CodeQuest Lite",
@@ -208,24 +586,20 @@
         "Firebase"
       ],
       "repo": "https://github.com/R7rainz/codequest-lite",
-      "demo": null,
-      "showcase": null,
-      "featured": false,
-      "art": "streak"
+      "demo": null
     },
     {
-      "name": "neovim-conf",
-      "blurb": "My Neovim configuration, split out on its own.",
+      "name": "neovim",
+      "blurb": "A Neovim 0.12+ IDE config with no plugin manager: native vim.pack, native LSP and completion, Treesitter, format-on-save, a Japanese dashboard, and automatic project sessions.",
       "role": null,
       "stack": [
         "Lua",
-        "Neovim"
+        "Neovim",
+        "LSP",
+        "Treesitter"
       ],
-      "repo": "https://github.com/R7rainz/neovim-conf",
-      "demo": null,
-      "showcase": null,
-      "featured": false,
-      "art": "editor"
+      "repo": "https://github.com/R7rainz/neovim",
+      "demo": null
     },
     {
       "name": "SoftSell",
@@ -237,62 +611,71 @@
         "Framer Motion"
       ],
       "repo": "https://github.com/R7rainz/softsell",
-      "demo": null,
-      "showcase": null,
-      "featured": false,
-      "art": "landing"
+      "demo": null
     }
   ],
   "resume": "/hero/resume.pdf",
   "resumePreview": "/hero/resume-preview.png",
   "timeline": [
     {
-      "year": "2005",
-      "icon": "born",
-      "title": "Born",
-      "detail": "26 July, 2005."
-    },
-    {
-      "year": "2010",
-      "icon": "school",
-      "title": "Started school",
-      "detail": "Primary through secondary, Sagar Public School."
-    },
-    {
       "year": "2021",
-      "icon": "exam",
       "title": "Class X",
       "detail": "CBSE.",
       "stat": "92.4%"
     },
     {
       "year": "2023",
-      "icon": "exam",
       "title": "Class XII",
       "detail": "CBSE.",
       "stat": "85.2%"
     },
     {
       "year": "2023",
-      "icon": "college",
       "title": "VIT Bhopal",
       "detail": "Joined September 2023 — B.Tech, Computer Science (core)."
     },
     {
       "year": "2026",
-      "icon": "code",
       "title": "Fourth year",
-      "detail": "Backend and systems. Go, Node, and the things behind them.",
+      "detail": "Full-stack work across React, Next.js, Go, and Node, and the systems behind them.",
       "stat": "8.56 CGPA"
     },
     {
       "year": "now",
-      "icon": "code",
       "title": "Full-stack intern · InboxKit",
       "detail": "Building product features across the stack for an email infrastructure platform used by outreach teams."
     }
   ],
   "monkeytype": {
     "username": "RAINZ7"
-  }
+  },
+  "beyond": [
+    {
+      "label": "Desktop",
+      "value": "Arch rice — dotfiles",
+      "detail": "My Arch Linux setup: Hyprland on Wayland with a Quickshell bar (Noctalia), plus rofi, mako, fish, Neovim and yazi. Deployed with GNU Stow. Featured on It's FOSS as one of the top Hyprland configs for UI/UX.",
+      "meta": "Arch · Hyprland · Quickshell · QML · Neovim · 74 stars",
+      "href": "https://github.com/R7rainz/dotfiles"
+    },
+    {
+      "label": "Football",
+      "value": "Cristiano Ronaldo fan",
+      "detail": "College football team member."
+    },
+    {
+      "label": "Competitive programming",
+      "value": "Codeforces Pupil · 1245",
+      "detail": "Actively solving algorithmic programming problems."
+    },
+    {
+      "label": "Sport",
+      "value": "State-level badminton player",
+      "detail": "And the gym."
+    },
+    {
+      "label": "Quiz",
+      "value": "3rd place, Technical Quiz",
+      "detail": "Tech Fest, Delhi Public School Kolar."
+    }
+  ]
 }
