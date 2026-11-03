@@ -1,3 +1,4 @@
+import { Label } from "@/components/Heading";
 import { getContributions, getGithubStats } from "@/lib/github";
 
 /** Server component — GitHub is hit at build/ISR time, never from the browser. */
@@ -6,33 +7,26 @@ export async function GithubActivity() {
   if (!stats && !contrib) return null;
 
   return (
-    <section id="github" className="border-t border-border py-16">
-      <SectionHeading>GitHub</SectionHeading>
+    <div className="card reveal mt-5 p-6 sm:p-8">
+      <Label>On GitHub</Label>
 
       {stats && (
-        <div className="mt-8 flex flex-wrap items-baseline gap-x-10 gap-y-5">
+        <dl className="mt-4 flex flex-wrap gap-x-12 gap-y-4">
           <Stat value={stats.repos} label="repos" />
           <Stat value={stats.stars} label="stars" />
           <Stat value={stats.followers} label="followers" />
-          {contrib && <Stat value={contrib.total} label="contributions this year" />}
-        </div>
+          {contrib && <Stat value={contrib.total} label="contributions, last year" />}
+        </dl>
       )}
 
       {contrib && <Calendar days={contrib.days} />}
 
       {stats && stats.topLanguages.length > 0 && (
-        <div className="mt-7 flex flex-wrap gap-1.5">
-          {stats.topLanguages.map((lang) => (
-            <span
-              key={lang}
-              className="rounded-full border border-border px-2.5 py-0.5 font-mono text-[0.7rem] text-foreground-muted"
-            >
-              {lang}
-            </span>
-          ))}
-        </div>
+        <p className="mt-4 font-mono text-xs text-foreground-subtle">
+          mostly {stats.topLanguages.join(" · ")}
+        </p>
       )}
-    </section>
+    </div>
   );
 }
 
@@ -52,76 +46,44 @@ function Calendar({ days }: { days: { date: string; count: number; level: number
   const weeks: (typeof cells)[] = [];
   for (let i = 0; i < cells.length; i += 7) weeks.push(cells.slice(i, i + 7));
 
-  // Drawn as one SVG with a viewBox rather than a flex grid of divs: a year is
-  // ~53 columns and always overflows the column at fixed cell sizes. The
-  // viewBox scales the whole calendar to the available width instead, so it
-  // never needs a horizontal scrollbar.
+  // One SVG with a viewBox rather than a grid of divs: a year is ~53 columns
+  // and would overflow at fixed cell sizes; the viewBox scales to fit instead.
   const width = weeks.length * STEP - GAP;
   const height = 7 * STEP - GAP;
 
   return (
-    <div className="mt-8">
-      <svg
-        viewBox={`0 0 ${width} ${height}`}
-        className="h-auto w-full"
-        role="img"
-        aria-label={`GitHub contribution calendar for the last year`}
-      >
-        {weeks.map((week, w) =>
-          week.map((day, d) =>
-            day ? (
-              <rect
-                key={day.date}
-                className="contrib-cell"
-                x={w * STEP}
-                y={d * STEP}
-                width={CELL}
-                height={CELL}
-                rx="2"
-                fill={`var(--contrib-${day.level})`}
-                // Staggered by column so the year sweeps in left to right
-                // (~640ms end to end) instead of appearing all at once.
-                style={{ animationDelay: `${w * 12}ms` }}
-              >
-                <title>{`${day.count} contribution${day.count === 1 ? "" : "s"} on ${day.date}`}</title>
-              </rect>
-            ) : null,
-          ),
-        )}
-      </svg>
-
-      <div className="mt-3 flex items-center gap-2 font-mono text-[0.65rem] text-foreground-subtle">
-        <span>less</span>
-        {[0, 1, 2, 3, 4].map((l) => (
-          <span
-            key={l}
-            className="h-[11px] w-[11px] rounded-[2px]"
-            style={{ backgroundColor: `var(--contrib-${l})` }}
-          />
-        ))}
-        <span>more</span>
-      </div>
-    </div>
+    <svg
+      viewBox={`0 0 ${width} ${height}`}
+      className="mt-6 h-auto w-full"
+      role="img"
+      aria-label="GitHub contribution calendar for the last year"
+    >
+      {weeks.map((week, w) =>
+        week.map((day, d) =>
+          day ? (
+            <rect
+              key={day.date}
+              x={w * STEP}
+              y={d * STEP}
+              width={CELL}
+              height={CELL}
+              rx="2"
+              fill={`var(--contrib-${day.level})`}
+            >
+              <title>{`${day.count} contribution${day.count === 1 ? "" : "s"} on ${day.date}`}</title>
+            </rect>
+          ) : null,
+        ),
+      )}
+    </svg>
   );
 }
 
 function Stat({ value, label }: { value: number; label: string }) {
   return (
-    <div className="flex flex-col">
-      <span className="font-mono text-2xl font-semibold tabular-nums text-heading">
-        {value.toLocaleString()}
-      </span>
-      <span className="mt-1 font-mono text-[0.65rem] uppercase tracking-[0.15em] text-foreground-subtle">
-        {label}
-      </span>
+    <div className="flex flex-col-reverse">
+      <dt className="font-mono text-[0.68rem] text-foreground-subtle">{label}</dt>
+      <dd className="text-3xl font-semibold tabular-nums tracking-[-0.03em] text-heading">{value.toLocaleString()}</dd>
     </div>
-  );
-}
-
-function SectionHeading({ children }: { children: React.ReactNode }) {
-  return (
-    <h2 className="font-mono text-[0.7rem] uppercase tracking-[0.25em] text-foreground-subtle">
-      {children}
-    </h2>
   );
 }
