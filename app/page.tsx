@@ -48,7 +48,7 @@ export default function Home() {
       <ScrollFx />
 
       {/* Floating chrome: it stays put while the page scrolls under it. */}
-      <header className="sticky top-0 z-40 flex items-center justify-between gap-2 py-4 text-[0.8rem] sm:gap-3 sm:text-sm before:absolute before:inset-y-0 before:left-1/2 before:-z-10 before:w-screen before:-translate-x-1/2 before:bg-gradient-to-b before:from-background before:via-background/70 before:to-transparent">
+      <header className="sticky top-0 z-40 flex items-center justify-between gap-2 py-4 text-[0.8rem] sm:gap-3 sm:text-sm">
         <a href="#" aria-label="Back to top" className="pill grid h-9 w-9 shrink-0 place-items-center sm:h-10 sm:w-10">
           <Mark className="h-5 w-5" />
         </a>
@@ -79,11 +79,15 @@ export default function Home() {
       </header>
 
       <main>
-        <section className="relative isolate pb-24 pt-20 text-center sm:pt-28">
-          {/* A rainy window behind the first screen, running up under the header. */}
-          <div className="absolute -top-[4.5rem] left-1/2 -z-10 h-[calc(100svh+4.5rem)] w-screen -translate-x-1/2 [mask-image:linear-gradient(to_bottom,black_72%,transparent)]">
-            <RainGlass />
-          </div>
+        <section className="pb-24 text-center">
+          {/* The landing is black glass in the rain, full width and running up
+              behind the floating header; dark in either theme (.glass restates
+              the dark tokens for what's inside). */}
+          <div className="glass relative left-1/2 -mt-[4.5rem] w-screen -translate-x-1/2 [color-scheme:dark]">
+            <div className="absolute inset-0">
+              <RainGlass />
+            </div>
+            <div className="relative mx-auto flex min-h-[100svh] max-w-[72rem] flex-col justify-center px-5 pb-44 pt-36 sm:px-8 sm:pb-52">
           <div className="hero-copy">
           <p className="rise pill inline-flex items-center gap-2.5 py-1 pl-1 pr-4 text-[0.82rem] text-foreground-muted">
             <Image
@@ -126,8 +130,11 @@ export default function Home() {
             <span>{name.status}</span>
           </div>
           </div>
+            </div>
+          </div>
 
-          <div className="rise mt-16 [animation-delay:500ms]">
+          {/* The showcase overlaps the bottom of the glass. */}
+          <div className="rise relative -mt-28 sm:-mt-32 [animation-delay:500ms]">
             <Terminal />
             <p className="mt-4 font-mono text-[0.7rem] text-foreground-subtle">
               it&apos;s a real shell, sort of. try <span className="text-heading">projects</span>,{" "}
