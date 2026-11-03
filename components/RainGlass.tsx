@@ -5,9 +5,8 @@ import { THEME_EVENT } from "@/lib/useTheme";
 
 /**
  * The landing section is a rainy window. Out of focus behind the glass, soft
- * lights drift (the accent blue and the warm wave colour). The pane is misted;
- * beads sit on it, slowly forming and evaporating, and a few drops run down
- * leaving clear trails. Each drop is a little lens: the world shows through
+ * lights drift (the accent blue and a metallic grey). The pane is misted, and a
+ * few drops run down it leaving clear trails. Each drop is a little lens: the world shows through
  * it sharp and flipped, with a highlight on top. The pointer wipes the glass.
  *
  * One fragment shader, no library. Colours come from theme tokens, re-read on
@@ -54,20 +53,6 @@ vec3 scene(vec2 p) {
   return c;
 }
 
-// Beads resting on the pane: (lens offset, coverage).
-vec3 beads(vec2 p, float cell, float seed) {
-  vec2 id = floor(p / cell);
-  vec2 g = fract(p / cell) - 0.5;
-  float n = h21(id + seed);
-  if (n < 0.4) return vec3(0.);
-  vec2 c = (vec2(h21(id + seed + 1.3), h21(id + seed + 2.7)) - 0.5) * 0.55;
-  float life = 0.5 + 0.5 * sin(t * 0.3 + n * 40.);
-  float r = mix(0.1, 0.22, h21(id + seed + 4.1)) * smoothstep(0., 0.35, life);
-  vec2 d = g - c;
-  float m = smoothstep(r, r * 0.5, length(d));
-  return vec3(d / max(r, 1e-3) * m, m);
-}
-
 // Drops running down: (lens offset, coverage, trail).
 vec4 runs(vec2 p, float w) {
   float col = floor(p.x / w);
@@ -91,11 +76,9 @@ vec4 runs(vec2 p, float w) {
 void main() {
   vec2 p = vec2(gl_FragCoord.x, res.y * dpr - gl_FragCoord.y) / dpr;
   float wipe = smoothstep(110., 50., length(p - mouse));
-  vec3 b1 = beads(p, 22., 0.) * (1. - wipe);
-  vec3 b2 = beads(p + 11., 46., 17.) * (1. - wipe);
   vec4 rn = runs(p, 64.);
-  float drop = max(max(b1.z, b2.z), rn.z);
-  vec2 lens = b1.xy * 22. + b2.xy * 36. + rn.xy * 54.;
+  float drop = rn.z;
+  vec2 lens = rn.xy * 54.;
 
   // Through a drop the world is sharp and flipped; elsewhere it's misted.
   vec3 c = scene(p - lens * 1.8);
@@ -103,7 +86,7 @@ void main() {
   c = mix(c, base, (1. - clear) * mist);
 
   // A highlight on top and a soft dark rim, so drops read on any background.
-  vec3 nrm = normalize(vec3(b1.xy + b2.xy + rn.xy, 0.6));
+  vec3 nrm = normalize(vec3(rn.xy, 0.6));
   c += drop * pow(max(0., dot(nrm, normalize(vec3(-0.5, -0.7, 0.6)))), 14.) * 0.4;
   c -= drop * (1. - drop) * 0.1;
   gl_FragColor = vec4(c, 1.);

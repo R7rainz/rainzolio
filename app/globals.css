@@ -34,7 +34,7 @@
   --inset: light-dark(#eceef1, #101114);
 
   --wave-a: light-dark(#4b62d8, #6f86ff);
-  --wave-b: light-dark(#e2774a, #ff9c6e);
+  --wave-b: light-dark(#a3a9b3, #d9dde3); /* metallic grey, silver-white in the dark */
 
   --contrib-0: light-dark(#e2e4e8, #18191d);
   --contrib-1: light-dark(#c9d2f3, #222a4d);
