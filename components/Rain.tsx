@@ -14,7 +14,7 @@ import { THEME_EVENT } from "@/lib/useTheme";
  * the tab; reduced motion gets one still frame.
  */
 
-type Drop = { x: number; y: number; len: number; v: number; a: number; end: number; blue: boolean };
+type Drop = { x: number; y: number; len: number; v: number; a: number; wid: number; end: number; blue: boolean };
 type Ripple = { x: number; y: number; t: number };
 type Spark = { x: number; y: number; vx: number; vy: number; t: number };
 
@@ -43,15 +43,21 @@ export function Rain() {
     let raf = 0;
     let last = 0;
 
-    const spawn = (y = -Math.random() * h): Drop => ({
-      x: Math.random() * (w + 120) - 120,
-      y,
-      len: 10 + Math.random() * 18,
-      v: 520 + Math.random() * 520,
-      a: 0.1 + Math.random() * 0.22,
-      end: h * (0.5 + Math.random() * 0.6),
-      blue: Math.random() < 0.2,
-    });
+    // Depth sells it: far drops (z near 0) are short, thin, faint and slow;
+    // near ones are longer, a touch thicker and faster.
+    const spawn = (y = -Math.random() * h): Drop => {
+      const z = Math.random() ** 1.6;
+      return {
+        x: Math.random() * (w + 120) - 120,
+        y,
+        len: 8 + z * 22,
+        v: 300 + z * 380,
+        a: 0.06 + z * 0.24,
+        wid: 0.6 + z * 0.8,
+        end: h * (0.5 + Math.random() * 0.6),
+        blue: Math.random() < 0.2,
+      };
+    };
 
     // Resolve a token to "r,g,b" by letting the browser compute it.
     const rgb = (token: string) => {
@@ -110,14 +116,15 @@ export function Rain() {
     const paint = () => {
       ctx.clearRect(0, 0, w, h);
       ctx.lineCap = "round";
-      ctx.lineWidth = 1;
       for (const d of drops) {
+        ctx.lineWidth = d.wid;
         ctx.strokeStyle = `rgba(${d.blue ? blue : grey},${d.a})`;
         ctx.beginPath();
         ctx.moveTo(d.x - d.len * WIND, d.y - d.len);
         ctx.lineTo(d.x, d.y);
         ctx.stroke();
       }
+      ctx.lineWidth = 1;
       for (const r of ripples) {
         const k = r.t / RIPPLE;
         ctx.strokeStyle = `rgba(${grey},${(1 - k) * 0.28})`;
