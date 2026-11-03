@@ -80,11 +80,10 @@ export default function Home() {
 
       <main>
         <section className="pb-24 text-center">
-          {/* The landing is black glass in the rain, full width and running up
-              behind the floating header; dark in either theme (.glass restates
-              the dark tokens for what's inside). */}
-          <div className="glass relative left-1/2 -mt-[4.5rem] w-screen -translate-x-1/2 [color-scheme:dark]">
-            <div className="absolute inset-0">
+          {/* The landing is a pane of glass in the rain, full width and running
+              up behind the floating header, fading into the page below. */}
+          <div className="relative left-1/2 -mt-[4.5rem] w-screen -translate-x-1/2">
+            <div className="absolute inset-0 [mask-image:linear-gradient(to_bottom,black_78%,transparent)]">
               <RainGlass />
             </div>
             <div className="relative mx-auto flex min-h-[100svh] max-w-[72rem] flex-col justify-center px-5 pb-44 pt-36 sm:px-8 sm:pb-52">
