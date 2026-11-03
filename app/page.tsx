@@ -145,8 +145,8 @@ export default function Home() {
         <section id="work" className="py-24">
           <Heading
             title="Selected work"
-            muted="drawn the way it runs."
-            sub="Each project comes with a sketch of how it actually works. Open one to walk through its workflow, step by step."
+            muted="try them out."
+            sub="Each one is a small working version of the real thing."
           />
           <Projects />
           <GithubActivity />
@@ -255,7 +255,7 @@ export default function Home() {
             <FooterColumn title="Sections" items={NAV.map(([label, href]) => ({ label, href }))} />
             <FooterColumn
               title="Projects"
-              items={profile.projects.filter((p) => p.diagram).map((p) => ({ label: p.name, href: p.repo, external: true }))}
+              items={profile.projects.filter((p) => p.live).map((p) => ({ label: p.name, href: p.repo, external: true }))}
             />
             <FooterColumn
               title="Elsewhere"

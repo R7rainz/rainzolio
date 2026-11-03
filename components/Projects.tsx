@@ -1,27 +1,20 @@
-import { ProjectCard } from "@/components/ProjectCard";
+import { Showcase } from "@/components/Showcase";
 import profile from "@/data/profile.json";
+import { getGithubStats } from "@/lib/github";
 
 /**
- * Projects with a `diagram` in profile.json become interactive cards that open
- * a workflow pop-up (ProjectCard); an odd last card spans the row. Everything
+ * Projects with a `live` key in profile.json get a working demo in the
+ * Showcase (stats feed the GitHub Banners demo; it copes with null). Everything
  * else is a numbered "More work" list.
  */
-export function Projects() {
-  const studies = profile.projects.filter((p) => p.diagram);
-  const rest = profile.projects.filter((p) => !p.diagram);
+export async function Projects() {
+  const stats = await getGithubStats();
+  const featured = profile.projects.filter((p) => p.live);
+  const rest = profile.projects.filter((p) => !p.live);
 
   return (
     <>
-      <div className="mt-14 grid gap-5 lg:grid-cols-2">
-        {studies.map((p, i) => (
-          <ProjectCard
-            key={p.name}
-            p={p}
-            n={i + 1}
-            wide={i === studies.length - 1 && studies.length % 2 === 1}
-          />
-        ))}
-      </div>
+      <Showcase projects={featured} stats={stats} />
 
       {rest.length > 0 && (
         <div className="mt-24">
