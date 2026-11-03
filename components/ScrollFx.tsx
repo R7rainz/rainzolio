@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 /**
  * Everything that reacts to scrolling, in one place (styles in globals.css):
- * - .reveal / .fig / .bar elements get .in as they enter the viewport; those
+ * - .reveal / .bar elements get .in as they enter the viewport; those
  *   arriving together are staggered.
  * - --hero (0..1 over the first screen) and --scroll (0..1 down the page) are
  *   written on <html> once per frame while scrolling.
@@ -28,7 +28,7 @@ export function ScrollFx() {
       },
       { rootMargin: "0px 0px -10% 0px", threshold: 0.12 },
     );
-    const watch = () => document.querySelectorAll(".reveal:not(.in), .fig:not(.in), .bar:not(.in)").forEach((el) => io.observe(el));
+    const watch = () => document.querySelectorAll(".reveal:not(.in), .bar:not(.in)").forEach((el) => io.observe(el));
     watch();
     // Sections that render late (e.g. after a theme change) still get picked up.
     const mo = new MutationObserver(watch);
